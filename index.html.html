@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGO-FULI — 21개 앱을 하루 330원에</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#D4A843;--gold2:#F5C842;--green:#34D399;--blue:#38BDF8;--red:#F87171;--purple:#A78BFA;--bg:#020C1B;--bg2:#050D1A;--bg3:#0A1628;--text:#F0ECE0;--text2:#94A3B8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+/* 배경 */
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(212,168,67,.04),transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(52,211,153,.03),transparent 50%);pointer-events:none;z-index:0;}
+
+/* 히어로 */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px 80px;}
+.patent-badge{display:inline-block;border:1px solid rgba(212,168,67,.4);border-radius:20px;padding:5px 16px;font-size:10px;color:var(--gold);letter-spacing:.15em;margin-bottom:20px;background:rgba(212,168,67,.06);animation:fadeDown .7s ease both;}
+.hero-icon{width:100px;height:100px;border-radius:24px;border:2px solid rgba(212,168,67,.35);box-shadow:0 0 40px rgba(212,168,67,.2);margin-bottom:24px;object-fit:cover;animation:fadeDown .7s .1s ease both;}
+.hero h1{font-family:'Orbitron',monospace;font-size:clamp(28px,8vw,52px);font-weight:900;color:var(--gold);letter-spacing:.06em;animation:fadeDown .7s .2s ease both;}
+.hero-tagline{font-family:'Noto Serif KR',serif;font-size:clamp(14px,3.5vw,20px);color:rgba(240,236,224,.7);margin-top:10px;line-height:1.7;animation:fadeDown .7s .3s ease both;}
+.hero-code{font-size:clamp(13px,3vw,17px);color:var(--gold2);margin-top:8px;font-weight:700;animation:fadeDown .7s .35s ease both;}
+
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:28px 0;animation:fadeDown .7s .4s ease both;}
+.stat{text-align:center;padding:14px 18px;background:rgba(255,255,255,.03);border:1px solid rgba(212,168,67,.2);border-radius:14px;min-width:85px;}
+.stat .num{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;color:var(--gold);}
+.stat .lbl{font-size:9px;color:var(--text2);margin-top:3px;letter-spacing:.05em;}
+
+.install-btn{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(212,168,67,.25),rgba(52,211,153,.15));border:1.5px solid var(--gold);border-radius:50px;padding:16px 36px;font-size:16px;font-weight:700;color:var(--gold);cursor:pointer;transition:all .3s;box-shadow:0 0 30px rgba(212,168,67,.15);animation:fadeDown .7s .5s ease both,glow 3s 1.5s ease-in-out infinite;text-decoration:none;}
+.install-btn:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(212,168,67,.3);}
+
+/* 섹션 */
+section{position:relative;z-index:1;padding:70px 24px;max-width:920px;margin:0 auto;}
+.sec-label{font-size:10px;letter-spacing:.25em;color:var(--gold);margin-bottom:8px;}
+.sec-title{font-family:'Noto Serif KR',serif;font-size:clamp(20px,5vw,32px);font-weight:900;line-height:1.4;margin-bottom:10px;}
+.sec-sub{font-size:12px;color:var(--text2);line-height:1.9;margin-bottom:36px;}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,.25),transparent);max-width:920px;margin:0 auto;}
+
+/* 기능 카드 그리드 */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;}
+.feat-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px 14px;text-align:center;cursor:pointer;transition:all .25s;user-select:none;}
+.feat-card:hover{background:rgba(212,168,67,.07);border-color:rgba(212,168,67,.4);transform:translateY(-3px);box-shadow:0 8px 24px rgba(212,168,67,.1);}
+.feat-card:active{transform:scale(.97);}
+.feat-icon{font-size:30px;margin-bottom:8px;}
+.feat-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.feat-desc{font-size:9.5px;color:var(--text2);line-height:1.5;}
+.feat-badge{display:inline-block;margin-top:6px;padding:2px 7px;border-radius:8px;font-size:7.5px;font-weight:700;background:rgba(212,168,67,.15);color:var(--gold);border:1px solid rgba(212,168,67,.25);}
+.tap-hint{font-size:9px;color:rgba(52,211,153,.5);margin-top:5px;}
+
+/* 팝업 오버레이 */
+.popup-overlay{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);display:none;align-items:flex-end;justify-content:center;padding:20px;}
+.popup-overlay.show{display:flex;}
+.popup-box{width:100%;max-width:500px;max-height:88vh;background:linear-gradient(160deg,#0a1628,#0d1f3c);border:1px solid rgba(212,168,67,.25);border-radius:24px 24px 16px 16px;overflow:hidden;display:flex;flex-direction:column;animation:slideUp .3s ease;}
+.popup-header{padding:20px 20px 0;display:flex;align-items:flex-start;gap:14px;}
+.popup-icon{font-size:36px;flex-shrink:0;margin-top:2px;}
+.popup-title-wrap{flex:1;}
+.popup-title{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:900;color:var(--gold);line-height:1.3;}
+.popup-subtitle{font-size:10px;color:var(--text2);margin-top:3px;letter-spacing:.05em;}
+.popup-close{background:rgba(255,255,255,.08);border:none;border-radius:50%;width:30px;height:30px;color:var(--text2);font-size:16px;cursor:pointer;flex-shrink:0;margin-top:2px;transition:all .2s;}
+.popup-close:hover{background:rgba(255,255,255,.15);color:var(--text);}
+.popup-body{padding:16px 20px 20px;overflow-y:auto;flex:1;}
+.popup-step{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
+.popup-step-num{width:26px;height:26px;border-radius:50%;background:rgba(212,168,67,.15);border:1px solid rgba(212,168,67,.35);color:var(--gold);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.popup-step-content{flex:1;}
+.popup-step-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.popup-step-desc{font-size:11px;color:rgba(240,236,224,.65);line-height:1.7;}
+.popup-tip{background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:11px;color:rgba(52,211,153,.8);line-height:1.7;}
+.popup-tip strong{color:var(--green);}
+.popup-divider{height:1px;background:rgba(255,255,255,.06);margin:14px 0;}
+.popup-world{display:inline-block;padding:3px 10px;border-radius:10px;font-size:9px;font-weight:700;background:rgba(212,168,67,.15);color:var(--gold);border:1px solid rgba(212,168,67,.3);margin-bottom:12px;}
+
+/* 비교표 */
+.compare-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:10px;min-width:560px;}
+th{background:rgba(212,168,67,.1);color:var(--gold);font-weight:700;padding:9px 10px;text-align:center;border:1px solid rgba(212,168,67,.15);font-size:9px;letter-spacing:.05em;}
+td{padding:8px 10px;text-align:center;border:1px solid rgba(255,255,255,.05);color:rgba(240,236,224,.7);}
+tr:nth-child(even) td{background:rgba(255,255,255,.02);}
+td:first-child{text-align:left;font-weight:700;color:var(--text);}
+.yes{color:var(--green);font-weight:700;} .no{color:var(--red);opacity:.7;} .part{color:#FCD34D;}
+.cgo{color:var(--gold);font-weight:700;background:rgba(212,168,67,.06)!important;}
+.cgo-h{background:rgba(212,168,67,.08)!important;}
+
+/* 가격 박스 */
+.price-box{background:linear-gradient(135deg,rgba(212,168,67,.07),rgba(52,211,153,.04));border:1px solid rgba(212,168,67,.25);border-radius:20px;padding:36px 28px;text-align:center;}
+.price-main{font-family:'Orbitron',monospace;font-size:clamp(36px,10vw,60px);font-weight:900;color:var(--gold);line-height:1;}
+.price-tags{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:20px 0;}
+.price-tag{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:4px 12px;font-size:10px;color:var(--text);}
+
+/* CTA */
+.cta{position:relative;z-index:1;text-align:center;padding:70px 24px 90px;}
+.cta h2{font-family:'Noto Serif KR',serif;font-size:clamp(22px,6vw,36px);font-weight:900;margin-bottom:10px;}
+.cta p{font-size:13px;color:var(--text2);margin-bottom:32px;line-height:1.9;}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-main{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#D4A843,#F5C842);border-radius:50px;padding:17px 38px;font-size:15px;font-weight:900;color:#050D1A;text-decoration:none;cursor:pointer;transition:all .3s;box-shadow:0 8px 30px rgba(212,168,67,.3);border:none;}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(212,168,67,.4);}
+.btn-sub{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:50px;padding:17px 30px;font-size:14px;font-weight:700;color:var(--text);text-decoration:none;cursor:pointer;transition:all .3s;}
+.btn-sub:hover{background:rgba(255,255,255,.1);}
+
+footer{position:relative;z-index:1;text-align:center;padding:24px;border-top:1px solid rgba(212,168,67,.1);font-size:9px;color:rgba(148,163,184,.35);letter-spacing:.1em;line-height:2;}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes glow{0%,100%{box-shadow:0 0 30px rgba(212,168,67,.15)}50%{box-shadow:0 0 50px rgba(212,168,67,.32)}}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+@media(max-width:480px){.stats-row{gap:10px}.stat{min-width:72px;padding:11px 13px}.stat .num{font-size:17px}section{padding:54px 18px}}
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="patent-badge">✦ 특허 10-2026-0060113 · PCT 국제 출원 중</div>
+  <img src="/icon-512.png" class="hero-icon" alt="CGO-FULI" onerror="this.style.display='none'">
+  <h1>CGO-FULI</h1>
+  <div class="hero-tagline">单一の앱 — 21個の世界<br>하나의 앱으로 21개 앱을 대체합니다</div>
+  <div class="hero-code">65,435줄 · 350만 자 · 972개 엔진 · 단일 파일 4.3MB</div>
+
+  <div class="stats-row">
+    <div class="stat"><div class="num">21</div><div class="lbl">앱 분량</div></div>
+    <div class="stat"><div class="num">17</div><div class="lbl">핵심 기능</div></div>
+    <div class="stat"><div class="num">972</div><div class="lbl">JS 엔진</div></div>
+    <div class="stat"><div class="num">21</div><div class="lbl">지원 언어</div></div>
+    <div class="stat"><div class="num">7</div><div class="lbl">세계 최초</div></div>
+  </div>
+
+  <a href="https://c-go-fuli.com" class="install-btn" onclick="cgoPwaGo(event)">
+    📲 지금 무료 설치하기
+  </a>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── 기능 전체 + 팝업 매뉴얼 ── -->
+<section>
+  <div class="sec-label">ALL FEATURES · 전체 기능</div>
+  <div class="sec-title">기능을 탭하면<br>사용법을 바로 볼 수 있어요 👆</div>
+  <div class="sec-sub">각 카드를 탭하면 상세 사용법 팝업이 열립니다.</div>
+
+  <div class="feat-grid">
+
+    <div class="feat-card" onclick="openPopup('messenger')">
+      <div class="feat-icon">💬</div>
+      <div class="feat-name">보안 메신저</div>
+      <div class="feat-desc">폭파 · 카메라방지 · 기울기</div>
+      <div class="feat-badge">세계 최초 7가지</div>
+      <div class="tap-hint">탭하여 사용법 보기</div>
+    </div>
+
+    <div class="feat-card" onclick="openPopup('bioscan')">
+      <div class="feat-icon">🧬</div>
+      <div class="feat-name">생체 스캔</div>
+      <div class="feat-desc">관상·손금·혀·호흡 rPPG</div>
+      <div class="feat-badge">세계 최초</div>
+      <div class="tap-hint">탭하여 사용법 보기</div>
+    </div>
+
+    <div class="feat-card" onclick="openPopup('ili')">
+      <div class="feat-icon">📊</div>
+      <div class="feat-name">ILI 에너지 점수</div>
+      <div class="feat-desc">NASA×역학×생체 융합 100점</div>
+      <div class="feat-badge">세계 최초</div>
+      <div class="tap-hint">탭하여 사용법 보기</div>
+    </div>
+
+    <div class="feat-card" onclick="openPopup('nasa')">
+      <div class="feat-icon">🛸</div>
+      <div class="feat-name">NASA × 역학</div>
+      <div class="feat-desc">9행성 실시간 × 50대 역학</div>
+      <div class="feat-badge">세계 최초</div>
+      <div class="tap-hint">탭하여 사용법 보기</div>
+    </div>
+
+    <div class="feat-card" onclick="openPopup('skin')">
+      <div class="feat-icon">💄</div>
+      <div class="feat-name">피부 · 탄력 분석</div>
+      <div class="feat-desc">MAI 흡수율 · SVI 탄력지수</div>
+      <div class="feat-badge">세계 최초</div>
+      <div class="tap-hint">탭하여 사용법 보기</div>
+    </div>
+
+    <div class="feat-card" onclick="openPopup('fengshui')">
+      <div class="feat-icon">🏠</div>
+      <div class="feat-name">360° 풍수 여행</div>
+      <div class="feat-desc">GPS × 나침반 × 오행 풍수</div>
+      <div class="feat-badge">세계 최초</div>
+      <div class="tap-hint">탭하여 사용법 보기</div>
+    </div>
+
+    <div class="feat-card" onclick="openPopup('compat')">
+      <div class="feat-icon">💑</div>
+      <div class="feat-name">rPPG 궁합 분석</div>
+      <div class="feat-desc">커플 · 면접 · 사업 궁합</div>
+      <div class="feat-badge">세계 최초</div>
+      <div class="tap-hint">탭하여 사용법 보기</div>
+    </div>
+
+    <div class="feat-card" onclick="openPopup('food')">
+      <div class="feat-icon">🍽️</div>
+      <div class="feat-name">음식 궁합</div>
+      <div class="feat-desc">오행 체질별 맞춤 식단</div>
+      <div class="feat-badge">세계 유일</div>
+      <div class="tap-hint">탭하여 사용법 보기</div>
+    </div>
+
+    <div class="feat-card" onclick="openPopup('music')">
+      <div class="feat-icon">🎵</div>
+      <div class="feat-name">주파수 음악</div>
+      <div class="feat-desc">에너지 맞춤 솔페지오</div>
+      <div class="feat-badge">세계 유일</div>
+      <div class="tap-hint">탭하여 사용법 보기</div>
+    </div>
+
+    <div class="feat-card" onclick="openPopup('stock')">
+      <div class="feat-icon">📈</div>
+      <div class="feat-name">주식 에너지</div>
+      <div class="feat-desc">오행 × NASA 투자 에너지</div>
+      <div class="feat-badge">세계 유일</div>
+      <div class="tap-hint">탭하여 사용법 보기</div>
+    </div>
+
+    <div class="feat-card" onclick="openPopup('oheng')">
+      <div class="feat-icon">🌟</div>
+      <div class="feat-name">오행 에너지</div>
+      <div class="feat-desc">목·화·토·금·수 실시간</div>
+      <div class="feat-badge">세계 유일</div>
+      <div class="tap-hint">탭하여 사용법 보기</div>
+    </div>
+
+    <div class="feat-card" onclick="openPopup('sejong')">
+      <div class="feat-icon">👑</div>
+      <div class="feat-name">세종 AI 코치</div>
+      <div class="feat-desc">NASA × 오행 고풍체 조언</div>
+      <div class="feat-badge">세계 유일</div>
+      <div class="tap-hint">탭하여 사용법 보기</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── 비교표 ── -->
+<section>
+  <div class="sec-label">COMPARISON · 비교</div>
+  <div class="sec-title">세계 메신저 보안 기술 비교</div>
+  <div class="compare-wrap">
+    <table>
+      <tr><th style="text-align:left">보안 기능</th><th>카카오톡</th><th>WhatsApp</th><th>텔레그램</th><th>Signal</th><th class="cgo-h">CGO-FULI★</th></tr>
+      <tr><td>카메라 촬영 방지</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="cgo">✅ 60Hz 세계최초</td></tr>
+      <tr><td>글자 이동 + 폭파</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="cgo">✅ 0.1초 세계최초</td></tr>
+      <tr><td>이중 폭파 (시간+열람)</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="cgo">✅ 세계최초</td></tr>
+      <tr><td>4단계 보안 슬라이더</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="cgo">✅ 세계최초</td></tr>
+      <tr><td>오행 궁합 채팅</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="cgo">✅ 세계유일</td></tr>
+      <tr><td>서버 완전 삭제</td><td class="no">❌</td><td class="no">❌</td><td class="yes">✅</td><td class="yes">✅</td><td class="cgo">✅ Firebase 즉시</td></tr>
+      <tr><td>가격</td><td>무료</td><td>무료</td><td>무료+유료</td><td>무료</td><td class="cgo">₩330/일 (17기능)</td></tr>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<div class="divider"></div>
+
+<!-- ── 앱 비교 ── -->
+<section>
+  <div class="sec-label">APP COMPARISON · 앱 비교</div>
+  <div class="sec-title">CGO-FULI 하나로<br>이 앱들을 전부 대체합니다</div>
+  <div class="sec-sub">할루시네이션 없이 실제 구독료 기준 · 2026년 앱스토어 가격</div>
+
+  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px;">
+    <div style="flex:1;min-width:130px;background:rgba(212,168,67,.06);border:1px solid rgba(212,168,67,.2);border-radius:16px;padding:18px;text-align:center;">
+      <div style="font-family:Orbitron,monospace;font-size:26px;font-weight:900;color:var(--gold);">17개</div>
+      <div style="font-size:10px;color:var(--text2);margin-top:4px;">대체 앱 수</div>
+    </div>
+    <div style="flex:1;min-width:130px;background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.2);border-radius:16px;padding:18px;text-align:center;">
+      <div style="font-family:Orbitron,monospace;font-size:20px;font-weight:900;color:#F87171;">₩95,500</div>
+      <div style="font-size:10px;color:var(--text2);margin-top:4px;">타 앱 합산 월 구독료</div>
+    </div>
+    <div style="flex:1;min-width:130px;background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:16px;padding:18px;text-align:center;">
+      <div style="font-family:Orbitron,monospace;font-size:26px;font-weight:900;color:var(--green);">9.6배</div>
+      <div style="font-size:10px;color:var(--text2);margin-top:4px;">CGO-FULI가 저렴</div>
+    </div>
+  </div>
+
+  <div class="compare-wrap">
+    <table>
+      <tr><th style="text-align:left">기능</th><th>대체 앱</th><th>타 앱 구독료/월</th><th>타 앱 한계</th><th class="cgo-h">CGO-FULI</th></tr>
+      <tr><td>💬 보안 메신저</td><td>텔레그램 프리미엄</td><td class="no">₩7,000</td><td style="font-size:9px;color:var(--text2)">기본 삭제만</td><td class="cgo">세계최초 7가지</td></tr>
+      <tr><td>🧬 관상 스캔</td><td>헬스케어 측정 앱</td><td class="no">₩12,000</td><td style="font-size:9px;color:var(--text2)">접촉식 기기 필요</td><td class="cgo">rPPG 비접촉</td></tr>
+      <tr><td>✋ 손금 분석</td><td>손금 점 앱</td><td class="no">₩3,000</td><td style="font-size:9px;color:var(--text2)">단순 이미지</td><td class="cgo">BLI 실측값</td></tr>
+      <tr><td>👅 설진 분석</td><td>전문 앱 없음</td><td class="no">없음</td><td style="font-size:9px;color:var(--text2)">앱 존재 안 함</td><td class="cgo">세계 최초</td></tr>
+      <tr><td>🫁 호흡 분석</td><td>Calm / 명상 앱</td><td class="no">₩8,500</td><td style="font-size:9px;color:var(--text2)">호흡 패턴만</td><td class="cgo">자율신경 측정</td></tr>
+      <tr><td>🛸 점성술·역학</td><td>Co-Star / Astro</td><td class="no">₩5,500</td><td style="font-size:9px;color:var(--text2)">NASA 미연동</td><td class="cgo">50대역학+NASA</td></tr>
+      <tr><td>💄 피부 분석</td><td>루미니 / SKIN앱</td><td class="no">₩6,000</td><td style="font-size:9px;color:var(--text2)">단순 AI 촬영</td><td class="cgo">MAI·SVI 세계최초</td></tr>
+      <tr><td>🏠 풍수 분석</td><td>풍수 인테리어 앱</td><td class="no">₩3,000</td><td style="font-size:9px;color:var(--text2)">GPS 미연동</td><td class="cgo">360° 실시간</td></tr>
+      <tr><td>💑 궁합 분석</td><td>궁합 보기 앱</td><td class="no">₩2,000</td><td style="font-size:9px;color:var(--text2)">사주만</td><td class="cgo">rPPG 궁합 세계최초</td></tr>
+      <tr><td>🍽️ 식단·영양</td><td>Noom / 마이피트니스</td><td class="no">₩12,000</td><td style="font-size:9px;color:var(--text2)">영양만</td><td class="cgo">오행 체질 맞춤</td></tr>
+      <tr><td>🎵 주파수 음악</td><td>Calm / Headspace</td><td class="no">₩8,500</td><td style="font-size:9px;color:var(--text2)">고정 주파수</td><td class="cgo">에너지 맞춤 Hz</td></tr>
+      <tr><td>📈 투자 분석</td><td>증권사 분석 앱</td><td class="no">₩5,000</td><td style="font-size:9px;color:var(--text2)">차트만</td><td class="cgo">오행×NASA 융합</td></tr>
+      <tr><td>🔮 사주 앱</td><td>사주풀이 앱</td><td class="no">₩3,000</td><td style="font-size:9px;color:var(--text2)">생년월일만</td><td class="cgo">실시간 보정</td></tr>
+      <tr><td>🌍 21개국어</td><td>DeepL / 파파고</td><td class="no">₩5,000</td><td style="font-size:9px;color:var(--text2)">번역만</td><td class="cgo">앱 내장 전환</td></tr>
+      <tr><td>📊 건강 예측</td><td>삼성헬스·애플헬스</td><td class="part">제한적</td><td style="font-size:9px;color:var(--text2)">기기 필요</td><td class="cgo">카메라만으로</td></tr>
+      <tr><td>🌱 AI 코치</td><td>AI 코칭 앱</td><td class="no">₩15,000</td><td style="font-size:9px;color:var(--text2)">역학 없음</td><td class="cgo">세종 AI 세계유일</td></tr>
+      <tr><td>📱 종합 라이프앱</td><td>없음</td><td class="no">없음</td><td style="font-size:9px;color:var(--text2)">존재하지 않음</td><td class="cgo">세계 유일</td></tr>
+      <tr>
+        <td style="font-weight:900;color:var(--gold);">합계 17가지</td>
+        <td style="color:var(--text2);font-size:10px;">17개 앱 따로 구독</td>
+        <td style="color:#F87171;font-weight:900;">₩95,500/월</td>
+        <td style="font-size:9px;color:var(--text2)">관리 번거로움</td>
+        <td style="color:var(--gold);font-weight:900;">₩9,900/월</td>
+      </tr>
+    </table>
+  </div>
+  <div style="background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:12px;padding:12px 16px;margin-top:14px;font-size:11px;color:rgba(52,211,153,.8);text-align:center;line-height:1.9;">
+    <strong style="color:var(--green)">매월 ₩85,600 절약</strong> · 17개 앱을 하나로 · 하루 단 ₩330<br>
+    <span style="font-size:9px;color:rgba(148,163,184,.4)">※ 실제 앱스토어·구글플레이 기준 가격. 설진 분석은 세계 최초로 대체 앱 없음.</span>
+  </div>
+</section>
+
+<!-- ── 가격 ── -->
+<section>
+  <div class="sec-label">PRICING · 가격</div>
+  <div class="sec-title">커피 한 잔보다 가벼운 가격</div>
+  <div class="price-box">
+    <div class="price-main">₩330</div>
+    <div style="font-size:14px;color:var(--text2);margin-top:6px;">하루 · 월 9,900원</div>
+    <div style="font-size:12px;color:rgba(52,211,153,.7);margin-top:8px;font-weight:700;">= 일반 앱 21개 분량을 단 하나로</div>
+    <div class="price-tags">
+      <span class="price-tag">💬 보안 메신저</span><span class="price-tag">🧬 생체 스캔 4종</span>
+      <span class="price-tag">🛸 NASA 실시간</span><span class="price-tag">💄 피부 분석</span>
+      <span class="price-tag">🏠 풍수 여행</span><span class="price-tag">🍽️ 음식 궁합</span>
+      <span class="price-tag">🎵 주파수 음악</span><span class="price-tag">📈 주식 에너지</span>
+      <span class="price-tag">💑 커플 궁합</span><span class="price-tag">👑 세종 AI</span>
+      <span class="price-tag">🌍 21개국어</span><span class="price-tag">🔮 50대 역학</span>
+    </div>
+    <div style="font-size:11px;color:var(--text2);">65,435줄 · 350만 자 · 972개 엔진 · 특허 10-2026-0060113</div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<div class="cta">
+  <h2>지금 바로 시작하세요</h2>
+  <p>안드로이드 · 아이폰 모두 지원 · 앱스토어 없이 바로 설치<br>설치 후 알림 허용하면 메시지 알림 수신 🔔</p>
+  <div class="cta-btns">
+    <a href="https://c-go-fuli.com" class="btn-main" onclick="cgoPwaGo(event)">📲 지금 무료 설치하기</a>
+    <a href="https://c-go-fuli.com" class="btn-sub">🌐 웹에서 바로 보기</a>
+  </div>
+  <p style="margin-top:28px;font-size:10px;color:rgba(148,163,184,.4);line-height:2;">
+    📱 안드로이드: 크롬으로 접속 → 하단 "앱 설치" 탭<br>
+    🍎 아이폰: 사파리로 접속 → 공유버튼 → 홈 화면에 추가
+  </p>
+</div>
+
+<footer>
+  CGO-FULI · 특허 10-2026-0060113 · PCT 국제 출원 중<br>
+  기획: 이주원 × Claude C-14 · C-15 × Gemini · 2026
+</footer>
+
+<!-- ══ 팝업 오버레이 ══ -->
+<div class="popup-overlay" id="popupOverlay" onclick="closePopup(event)">
+  <div class="popup-box" id="popupBox">
+    <div class="popup-header">
+      <div class="popup-icon" id="popupIcon">💬</div>
+      <div class="popup-title-wrap">
+        <div class="popup-title" id="popupTitle">기능명</div>
+        <div class="popup-subtitle" id="popupSubtitle">부제목</div>
+      </div>
+      <button class="popup-close" onclick="_closePopup()">✕</button>
+    </div>
+    <div class="popup-body" id="popupBody"></div>
+  </div>
+</div>
+
+<script>
+// ── 팝업 데이터 ──
+var POPUPS = {
+
+messenger: {
+  icon:'💬', title:'CGO-FULI 보안 메신저 사용법',
+  subtitle:'세계 최초 7가지 보안 기술 · 특허 10-2026-0060113',
+  world:'세계 최초 7가지',
+  steps:[
+    {t:'✅ STEP 1 — 앱 설치 및 첫 실행',d:'<b style="color:#D4A843">① c-go-fuli.com 접속</b><br>안드로이드: 크롬 브라우저로 접속 → 하단 "앱 설치" 팝업 탭<br>아이폰: 사파리로 접속 → 하단 공유버튼 □↑ → 홈 화면에 추가 → 추가<br><b style="color:#34D399">② 설치 후 앱 아이콘 탭해서 실행!</b>'},
+    {t:'✅ STEP 2 — 이름·생년월일 입력',d:'앱을 처음 열면 정보 입력 화면이 나와요.<br><b style="color:#D4A843">① 이름 입력</b> (예: 이주원)<br><b style="color:#D4A843">② 생년월일 입력</b> (예: 1980-01-15)<br><b style="color:#D4A843">③ 태어난 시 선택</b><br><b style="color:#38BDF8">④ 계산하기 버튼 탭!</b><br>→ 이름이 자동으로 메신저 닉네임이 됩니다 ✅'},
+    {t:'✅ STEP 3 — 메신저 탭으로 이동',d:'하단 메뉴에서 <b style="color:#34D399">💬 CGO 메신저</b> 탭<br>→ 처음 진입 시 알림 허용 팝업 뜸<br><b style="color:#F87171">⚠️ 반드시 "허용" 클릭!</b><br>→ 허용해야 상대방 메시지 알림을 받을 수 있어요 🔔<br>→ 내 이름과 오행이 자동으로 설정됩니다 ✅'},
+    {t:'✅ STEP 4 — 친구 찾아서 대화 시작',d:'<b style="color:#D4A843">① 우상단 + 버튼 탭</b><br>→ 친구 검색창이 열립니다<br><b style="color:#D4A843">② 친구 이름 입력</b> (예: 이동생)<br>→ 목록에서 친구 이름이 보이면<br><b style="color:#34D399">③ 이름 탭 → 대화 시작!</b><br><br>⚠️ 친구가 검색 안 되면?<br>→ 친구도 앱 설치 + 이름 입력을 먼저 해야 해요!'},
+    {t:'✅ STEP 5 — 메시지 보내기',d:'채팅창 하단 입력창에 메시지 입력<br>→ 전송 버튼 탭!<br><br><b style="color:#34D399">상대방 폰에 알림이 울려요 🔔</b><br>앱이 꺼져있어도 푸시 알림으로 전달됩니다!<br><br>📝 메시지는 설정 시간 후 자동 폭파<br>💣 상대방이 2회 읽으면 즉시 삭제<br>→ 서버에서도 완전히 사라집니다!'},
+    {t:'🛡️ STEP 6 — 보안 강도 설정 (선택)',d:'채팅창 상단 <b style="color:#D4A843">⚙️ 버튼</b> 탭<br><br>🟢 <b>일반</b> — 15자 / 30초 삭제 (편한 대화)<br>🟡 <b>보안</b> — 8자 / 15초 삭제 (기본 보안)<br>🔴 <b>기밀</b> — 6자 / 7초 삭제 (중요 정보)<br>🛡️ <b>최강</b> — 4자 / 3초 삭제 (절대 비밀)<br><br>슬라이더로 직접 조정도 가능해요!'},
+    {t:'📷 STEP 7 — 카메라 방지 (선택)',d:'상단 <b style="color:#F87171">📷 CAM 버튼</b> 탭 → ON<br>→ 60Hz 깜빡임 레이어 활성화<br>→ 사람 눈에는 정상으로 보이지만<br>→ 카메라로 찍으면 줄무늬만 나옵니다!<br><br>상단 <b style="color:#34D399">🛡️ Shield 버튼</b> 탭 → ON<br>→ 스크린샷 찍어도 흐릿하게 나옵니다<br><br>💡 최강 모드 선택 시 둘 다 자동 ON!'},
+    {t:'📐 STEP 8 — 기울기 보안 (선택)',d:'상단 <b style="color:#38BDF8">📐 기울기 버튼</b> 탭 → ON<br>→ 폰을 35~65° 기울여야만 메시지 보임<br>→ 옆 사람이 훔쳐봐도 화면이 잠깁니다!<br>→ 내가 켜면 상대방 폰도 자동으로 동기화!'},
+    {t:'👑 STEP 9 — 세종 AI 코치 (선택)',d:'채팅창 상단 <b style="color:#A78BFA">🤖 AI 코치 버튼</b> 탭<br>→ 두 사람의 오행 + NASA 실시간 행성 데이터 분석<br>→ "~이옵니다, ~하시겠나이까" 🎐<br>→ 고풍스러운 말투로 궁합·조언을 알려드립니다<br><br>💡 연인·친구·동료와 대화 중 탭해보세요!'}
+  ],
+  tip:'💡 핵심 순서: ① 앱 설치 → ② 이름·생년월일 입력 → ③ 메신저 탭 → ④ 알림 허용 → ⑤ 친구 검색 → ⑥ 대화 시작! 코드 입력 없이 이름만으로 연결됩니다 😊'
+},
+
+bioscan: {
+  icon:'🧬', title:'생체 스캔 4종',
+  subtitle:'rPPG 비접촉 실시간 생체 분석 · 세계 최초',
+  world:'세계 최초',
+  steps:[
+    {t:'관상 스캔 🧖 — 얼굴 분석',d:'앱 → 생체 스캔 메뉴 → 관상 탭 → 카메라가 자동으로 얼굴을 33초간 스캔. 조명 밝은 곳에서 정면을 바라보세요. FCI(안면혈색지수)와 HRV(심박변이도)를 측정합니다.'},
+    {t:'손금 스캔 ✋ — 손바닥 분석',d:'손금 스캔 탭 → 손바닥을 카메라 앞에 펼치기 → 33초 스캔. BLI(손금분기지수)를 측정해 건강 에너지를 분석합니다.'},
+    {t:'혀 스캔 👅 — 설진 분석',d:'혀 스캔 탭 → 혀를 카메라 앞에 내밀기 → 스캔. 혀 색상(담홍색·홍색·담백색 등)으로 오행 체질과 오장육부 상태를 분석합니다.'},
+    {t:'호흡 분석 🫁 — 4·7·8 호흡',d:'호흡 탭 → 시작 버튼 탭 → 들숨 4초 · 참기 7초 · 날숨 8초 한 사이클. 마이크로 실제 호흡을 감지해 자율신경 균형을 측정합니다.'},
+    {t:'결과 확인 📊',d:'4종 스캔 완료 후 → AI 통합 건강 예측 → 생체 실측 5카드(관상·손금·혀·호흡·체온)에 점수가 표시됩니다. ILI 점수에 생체 데이터가 자동 반영!'}
+  ],
+  tip:'💡 4종 스캔을 모두 완료하면 AI 통합 건강 예측의 정확도가 크게 올라갑니다. 밝은 곳에서 스캔하세요!'
+},
+
+ili: {
+  icon:'📊', title:'ILI 통합 라이프 인덱스',
+  subtitle:'세계 최초 실시간 융합 100점 에너지 지수',
+  world:'세계 최초',
+  steps:[
+    {t:'ILI란?',d:'ILI(Integrated Life Index) = 우주(NASA) × 날씨 × 생체(rPPG) × 역학(50대) 를 실시간으로 융합한 세계 최초 100점 라이프 지수입니다. 오늘 당신의 에너지가 몇 점인지 알 수 있어요.'},
+    {t:'계산 방법',d:'앱 메인 화면 → 정보 입력 (이름·생년월일·태어난 시) → "계산하기" 탭. 자동으로 NASA 데이터·날씨·역학이 연동되어 ILI 점수가 계산됩니다.'},
+    {t:'점수 구성',d:'역학 70% (S01~S19 50대 엔진) + 생체 30% (rPPG 스캔 시). 생체 스캔을 완료하면 더 정확한 점수가 나옵니다!'},
+    {t:'실시간 변화',d:'ILI는 NASA 행성 위치가 바뀌거나 날씨가 변하면 실시간으로 달라집니다. 매일 아침 확인하는 습관을 가져보세요.'},
+    {t:'대시보드 확인',d:'메인 대시보드 → ILI 점수 카드 → 탭하면 세부 분석 확인. 역학별 점수(S01~S19)와 NASA 보정 내역을 볼 수 있습니다.'}
+  ],
+  tip:'💡 70점 이상: 오늘 에너지 좋음! 60점 이하: 중요한 결정은 내일로. 점수보다 변화 추세가 더 중요해요!'
+},
+
+nasa: {
+  icon:'🛸', title:'NASA × 50대 역학 분석',
+  subtitle:'실시간 9행성 데이터 × 동서양 50대 역학 엔진',
+  world:'세계 최초',
+  steps:[
+    {t:'어떤 역학을 분석하나요?',d:'동양: 사주명리·자미두수·기문둔갑·태을신수·구성기학·주역·풍수·성명학·육임신살 등\n서양: 베딕점성술·타로·카발라·수비학·하우스시스템·합성차트 등\n총 50가지 엔진을 동시에 계산합니다!'},
+    {t:'NASA 연동이란?',d:'NASA JPL(제트추진연구소) 실시간 API로 9행성(수·금·지·화·목·토·천·해·명)의 역행/순행 위치를 받아옵니다. 화성이 역행 중이면 그 역학 점수가 낮아지는 방식입니다.'},
+    {t:'정밀 리포트 보기',d:'앱 → CGO-FULI 에너지의 서 → 정밀 리포트 탭 → S01~S19 각 역학 점수와 NASA 보정 이유를 확인할 수 있습니다. "S06: 63 ↓ 화성 역행 중" 식으로 표시돼요.'},
+    {t:'실시간 연동 분석',d:'에너지의 서 → 실시간 rPPG 데이터 연동 분석 (생체 스캔 완료 후 활성화) → 생체 데이터까지 반영한 가장 정확한 분석을 볼 수 있습니다.'},
+    {t:'오늘의 운세',d:'대시보드 → 오늘의 운세 → 종합 에너지 흐름, 길방위, 추천 행동, 조심할 사항을 확인하세요.'}
+  ],
+  tip:'💡 NASA 연동은 인터넷 연결 시 자동으로 됩니다. WiFi 환경에서 앱을 열면 최신 행성 데이터가 반영돼요!'
+},
+
+skin: {
+  icon:'💄', title:'피부 · 탄력 분석 (MAI · SVI)',
+  subtitle:'MAI 피부흡수율 · SVI 탄력지수 · rPPG 비접촉 세계최초',
+  world:'세계 최초',
+  steps:[
+    {t:'MAI란? (Moisture Absorption Index)',d:'피부가 영양성분을 얼마나 잘 흡수하는지를 나타내는 지수입니다. rPPG로 얼굴 피부 혈류 변화를 분석해 흡수율을 계산합니다. 화장품 선택에 활용하세요!'},
+    {t:'SVI란? (Skin Vitality Index)',d:'피부 탄력과 생기를 나타내는 지수입니다. 안면혈색지수(FCI)와 오행 체질을 결합해 오늘의 피부 탄력 상태를 0~100으로 표시합니다.'},
+    {t:'분석 방법',d:'앱 → 건강/뷰티 메뉴 → 피부 분석 → 관상 스캔 먼저 완료 → 자동으로 MAI·SVI 점수 계산. 밝고 자연광 환경에서 스캔하면 더 정확합니다.'},
+    {t:'오행 체질별 피부 케어',d:'스캔 후 내 오행 체질에 맞는 피부 관리법을 알려드립니다:\n목형 → 수분 집중케어\n화형 → 진정·쿨링\n토형 → 영양 균형\n금형 → 미백·재생\n수형 → 보습·보호'},
+    {t:'결과 활용법',d:'MAI 점수가 높은 날 → 영양 크림, 마스크팩 효과 최상!\nSVI 점수가 낮은 날 → 피부 자극 최소화, 수분 보충 집중'}
+  ],
+  tip:'💡 아침에 일어나자마자 스캔하면 가장 정확한 피부 상태를 알 수 있어요. 화장 전에 확인해보세요!'
+},
+
+fengshui: {
+  icon:'🏠', title:'360° 풍수 여행',
+  subtitle:'GPS × 나침반 × 기상 × 오행 실시간 풍수 세계최초',
+  world:'세계 최초',
+  steps:[
+    {t:'풍수 분석이란?',d:'현재 위치의 GPS 좌표, 나침반 방위, 실시간 기상(기압·기온·습도), 오행 에너지를 결합해 "지금 이 장소의 풍수 에너지"를 실시간으로 측정합니다.'},
+    {t:'여행지 풍수 확인',d:'앱 → 풍수 여행 메뉴 → 현재 위치 자동 인식 → 나침반을 돌리면 방위별 에너지 지도가 표시됩니다. 내 오행에 맞는 길방위(길한 방향)를 찾을 수 있어요.'},
+    {t:'숙소·식당 풍수',d:'목적지 입력 → 해당 장소의 방위 에너지 분석 → 오행별 적합도 점수. 예약 전에 내 오행과 맞는 숙소를 찾을 수 있습니다.'},
+    {t:'나침반 방위 활용',d:'대시보드 나침반 → 현재 방위 실시간 표시 → 방위별 오행 에너지(북:수·동:목·남:화·서:금·중:토) 자동 계산. 앉는 방향, 침대 방향 결정에 활용하세요.'},
+    {t:'여행 계획 세우기',d:'풍수 여행 → 날짜 선택 → 해당 날의 NASA 행성 위치와 내 오행을 결합해 최적의 여행 방향과 장소를 추천합니다.'}
+  ],
+  tip:'💡 여행 출발 전날 목적지의 풍수를 미리 확인하세요. 내 오행과 맞는 방향의 여행이 더 좋은 에너지를 가져다줍니다!'
+},
+
+compat: {
+  icon:'💑', title:'rPPG 궁합 분석',
+  subtitle:'커플 · 비즈니스 · 면접 궁합 · rPPG 생체 융합 세계최초',
+  world:'세계 최초',
+  steps:[
+    {t:'궁합 분석이란?',d:'두 사람의 사주·오행·이름 수리에 NASA 실시간 행성 데이터와 rPPG 생체 파동을 더해 가장 과학적인 궁합을 분석합니다. 세계 어떤 궁합 앱도 생체 파동을 사용하지 않아요.'},
+    {t:'커플 궁합',d:'앱 → 궁합 분석 → 내 정보 입력 → 상대방 이름·생년월일 입력 → 분석. 오행 상생상극 관계, 사주 궁합, 베딕 궁합을 종합한 점수와 조언을 드립니다.'},
+    {t:'rPPG 궁합 (가장 정확)',d:'두 사람이 각자 생체 스캔 완료 → 궁합 분석 → rPPG 생체 파동 데이터 반영. 실제 두 사람의 생체 에너지 파동이 얼마나 잘 맞는지 측정합니다. 세계 최초!'},
+    {t:'비즈니스 · 면접 궁합',d:'상대방이 회사, 거래처, 면접관일 때도 사용 가능. 오행으로 상대방의 에너지 유형을 파악하고 최적의 소통 전략을 제안합니다.'},
+    {t:'궁합 결과 해석',d:'★★★★★ 천생연분 · ★★★★ 좋음 · ★★★ 보통 · ★★ 주의 · ★ 상극\n오행 상생 관계(목→화→토→금→수→목)가 좋을수록 점수가 높습니다.'}
+  ],
+  tip:'💡 커플이라면 두 사람이 각자 생체 스캔을 완료한 후 rPPG 궁합을 분석하면 가장 정확한 결과가 나와요!'
+},
+
+food: {
+  icon:'🍽️', title:'음식 궁합',
+  subtitle:'오행 체질 × 계절 × NASA 에너지 맞춤 식단',
+  world:'세계 유일',
+  steps:[
+    {t:'오행 체질별 식단이란?',d:'내 오행 체질에 따라 오늘 먹으면 좋은 음식과 피해야 할 음식을 알려드립니다. NASA 계절 데이터와 현재 건강 상태(생체 스캔)까지 반영한 맞춤 식단입니다.'},
+    {t:'사용 방법',d:'앱 → 음식 궁합 메뉴 → 오늘의 추천 음식 목록 확인. 생체 스캔 완료 시 현재 오장육부 상태까지 반영해 더 정확한 추천을 드립니다.'},
+    {t:'오행별 추천 식품',d:'목형(간·담) → 초록 채소, 신맛\n화형(심장) → 쓴맛, 붉은 음식\n토형(비장·위) → 단맛, 노란 음식\n금형(폐·대장) → 매운맛, 흰 음식\n수형(신장) → 짠맛, 검은 음식'},
+    {t:'오늘 피해야 할 음식',d:'내 오행과 상극 관계의 음식은 오늘 에너지 소비가 커집니다. 앱에서 빨간 표시로 알려드려요.'},
+    {t:'혀 스캔 연동',d:'혀 색상 스캔 후 → 오장육부 상태 반영 → 더욱 정밀한 음식 궁합 제공. 예: 혀가 창백하면 보온·보양 음식 추천'}
+  ],
+  tip:'💡 아침에 혀 스캔 후 음식 궁합을 확인하면 오늘 하루 식단 계획을 세우는 데 최고예요!'
+},
+
+music: {
+  icon:'🎵', title:'주파수 음악 치유',
+  subtitle:'솔페지오 주파수 × 오행 에너지 맞춤 음악 세계유일',
+  world:'세계 유일',
+  steps:[
+    {t:'솔페지오 주파수란?',d:'특정 Hz 주파수 음악이 신체와 정신에 영향을 미친다는 고대 음악 이론입니다. 396Hz(해방) · 528Hz(변형·치유) · 639Hz(연결) · 741Hz(표현) · 852Hz(직관) 등이 있어요.'},
+    {t:'오행 맞춤 주파수',d:'CGO-FULI는 내 오행과 오늘의 에너지 상태에 따라 최적의 주파수를 자동으로 선택합니다:\n목(木) → 639Hz 연결\n화(火) → 528Hz 치유\n토(土) → 396Hz 해방\n금(金) → 741Hz 표현\n수(水) → 852Hz 직관'},
+    {t:'사용 방법',d:'앱 → 주파수 음악 메뉴 → 오늘 추천 주파수 확인 → 재생 버튼 탭 → 이어폰 착용 후 감상. ILI 점수와 생체 데이터가 반영되어 최적 주파수를 추천합니다.'},
+    {t:'명상 + 주파수',d:'4-7-8 호흡 분석 직후 주파수 음악을 함께 사용하면 자율신경 균형 효과가 배가됩니다.'},
+    {t:'NASA 행성 에너지 반영',d:'오늘 행성 위치에 따라 주파수 추천이 달라집니다. 화성 역행 중 → 진정 주파수 / 목성 순행 중 → 성장 주파수'}
+  ],
+  tip:'💡 취침 전 15분, 이어폰으로 오늘의 추천 주파수를 들으면 수면의 질이 달라집니다!'
+},
+
+stock: {
+  icon:'📈', title:'주식 에너지 예측',
+  subtitle:'오행 × NASA × rPPG 생체 융합 투자 에너지 세계유일',
+  world:'세계 유일',
+  steps:[
+    {t:'주식 에너지란?',d:'주식 투자의 성패는 시장 분석만큼 "투자자 본인의 에너지 상태"가 중요합니다. CGO-FULI는 오늘 내 에너지(ILI)와 오행, NASA 행성 에너지를 결합해 투자 에너지 지수를 계산합니다.'},
+    {t:'사용 방법',d:'앱 → 주식 에너지 메뉴 → 관심 종목 또는 업종 선택 → 내 오행과 해당 종목의 오행 에너지 궁합 분석. 매수·매도 타이밍의 에너지 흐름을 확인하세요.'},
+    {t:'오행별 투자 성향',d:'목형 → 성장주·기술주 친화\n화형 → 단기 매매 에너지 강함\n토형 → 배당주·안정주 선호\n금형 → 귀금속·원자재 에너지\n수형 → 장기 투자 에너지'},
+    {t:'NASA 행성 영향',d:'목성 순행 → 확장·성장 에너지 (매수 고려)\n토성 역행 → 제한·조정 에너지 (관망 추천)\n화성 역행 → 리스크 증가 (보수적 접근)\n오늘의 행성 에너지를 투자 참고 자료로 활용하세요.'},
+    {t:'⚠️ 중요 안내',d:'본 기능은 역학·오행·NASA 에너지 기반의 참고 정보입니다. 실제 투자 결정은 본인 책임으로 하시고 전문 금융 상담사와 상의하세요.'}
+  ],
+  tip:'💡 ILI 점수가 75점 이상인 날이 에너지 흐름이 좋습니다. 중요한 투자 결정은 에너지 좋은 날에 하세요!'
+},
+
+oheng: {
+  icon:'🌟', title:'오행 에너지 분석',
+  subtitle:'목·화·토·금·수 실시간 에너지 · NASA × 역학 세계유일',
+  world:'세계 유일',
+  steps:[
+    {t:'오행이란?',d:'동양 철학의 핵심인 木(목·나무)·火(화·불)·土(토·흙)·金(금·쇠)·水(수·물) 5가지 에너지 원소입니다. 모든 자연과 인간은 이 5가지 에너지의 조합으로 이루어져 있습니다.'},
+    {t:'내 오행 찾기',d:'앱 → 정보 입력 → 생년월일 입력 → 자동 계산. 일간(日干)을 기준으로 내 주 에너지 오행이 결정됩니다. 이후 모든 분석이 내 오행 기준으로 맞춤 제공됩니다.'},
+    {t:'오늘의 오행 에너지',d:'대시보드 → 오행 에너지 카드 → 오늘 어떤 오행 에너지가 강하고 약한지 확인. NASA 행성 위치와 날씨 데이터가 실시간으로 반영됩니다.'},
+    {t:'오행 상생·상극',d:'상생(돕는 관계): 목→화→토→금→수→목\n상극(억제 관계): 목→토, 화→금, 토→수, 금→목, 수→화\n오늘 내 오행과 상생하는 에너지를 활용하면 더 좋은 결과가 나옵니다.'},
+    {t:'활용법',d:'오행 에너지 → 의사결정, 건강, 인간관계, 방위 선택에 활용. 메신저의 상대방 오행도 확인해 궁합 관계를 파악하세요.'}
+  ],
+  tip:'💡 내 오행 색상을 알면 오늘 입을 옷 색상, 먹을 음식, 앉을 방향까지 에너지를 높이는 선택을 할 수 있어요!'
+},
+
+sejong: {
+  icon:'👑', title:'세종대왕 AI 코치',
+  subtitle:'NASA × 오행 × 역학 기반 고풍체 AI 조언 세계유일',
+  world:'세계 유일',
+  steps:[
+    {t:'세종 AI란?',d:'CGO-FULI의 전속 AI 코치입니다. 두 사람의 오행·사주·NASA 실시간 데이터를 모두 분석해 세종대왕 말투로 지혜로운 조언을 드립니다. 🎐 풍경소리와 함께 답변이 시작됩니다.'},
+    {t:'메신저에서 사용',d:'채팅창 상단 "AI 코치" 버튼 탭 → 상대방과의 오행 궁합 분석 → "~이옵니다, ~하시겠나이까" 고풍스러운 말투로 두 사람의 관계와 오늘의 조언을 들려드립니다.'},
+    {t:'개인 상담',d:'앱 → 세종 AI 메뉴 → 고민이나 질문 입력 → 내 사주·오행·오늘 ILI 점수를 반영한 맞춤 답변. 중요한 결정이 있을 때 물어보세요.'},
+    {t:'NASA 연동 조언',d:'오늘 행성 에너지 상태를 분석해 "오늘은 화성이 역행 중이니 중요한 결정은 삼가시옵소서" 같은 실시간 조언을 드립니다.'},
+    {t:'세종 AI의 특별함',d:'단순한 AI 챗봇이 아닙니다. 50대 역학 분석 + NASA 실시간 + 생체 데이터 + 오행 궁합을 모두 종합해 답변합니다. 세계 어떤 AI도 이런 분석을 하지 않아요.'}
+  ],
+  tip:'💡 "오늘 중요한 미팅이 있는데 어떻게 하면 좋을까요?" 같이 구체적으로 물어보면 더 정확한 조언을 드립니다!'
+}
+
+};
+
+function openPopup(key) {
+  var d = POPUPS[key];
+  if(!d) return;
+  document.getElementById('popupIcon').textContent = d.icon;
+  document.getElementById('popupTitle').textContent = d.title;
+  document.getElementById('popupSubtitle').textContent = d.subtitle;
+
+  var html = '';
+  if(d.world) html += '<div class="popup-world">🌍 '+d.world+'</div>';
+
+  d.steps.forEach(function(s,i){
+    html += '<div class="popup-step">'
+      + '<div class="popup-step-num">'+(i+1)+'</div>'
+      + '<div class="popup-step-content">'
+      + '<div class="popup-step-title">'+s.t+'</div>'
+      + '<div class="popup-step-desc">'+s.d.replace(/\n/g,'<br>')+'</div>'
+      + '</div></div>';
+    if(i < d.steps.length-1) html += '<div class="popup-divider"></div>';
+  });
+
+  if(d.tip) html += '<div class="popup-tip">'+d.tip+'</div>';
+
+  document.getElementById('popupBody').innerHTML = html;
+  document.getElementById('popupOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+}
+
+function closePopup(e) {
+  if(e.target === document.getElementById('popupOverlay')) {
+    _closePopup();
+  }
+}
+function _closePopup() {
+  document.getElementById('popupOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.documentElement.style.overflow = '';
+}
+
+function cgoPwaGo(e) {
+  if(e) e.preventDefault();
+  var ua = navigator.userAgent.toLowerCase();
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isInApp = /kakaotalk|fbav|instagram|naver|line|snapchat|twitter/i.test(ua);
+
+  // ── 안드로이드 인앱브라우저 → 크롬 자동 전환 ──
+  if(!isIOS && isInApp){
+    location.href='intent://c-go-fuli.com#Intent;scheme=https;package=com.android.chrome;end';
+    return;
+  }
+
+  // ── iOS 인앱브라우저 → 사파리 안내 팝업 ──
+  if(isIOS && isInApp){
+    _showIosInAppGuide();
+    return;
+  }
+
+  // ── iOS 사파리 → 홈화면 추가 안내 ──
+  if(isIOS){
+    _showIosInstallGuide();
+    return;
+  }
+
+  // ── 안드로이드 크롬 → 바로 앱 설치 ──
+  if(window._cgoPwaPromptEvent){
+    window._cgoPwaPromptEvent.prompt();
+    return;
+  }
+
+  // ── 그 외 → 앱 페이지로 이동 ──
+  location.href='https://c-go-fuli.com';
+}
+
+// iOS 인앱브라우저 (카카오 등) → 사파리로 열기 안내
+function _showIosInAppGuide(){
+  _showPopupMsg('📲', 'Safari로 열어주세요!',
+    '카카오톡 내 브라우저에서는 설치가 되지 않아요 😅<br><br>' +
+    '아래 방법으로 사파리에서 열어주세요:<br><br>' +
+    '<b style="color:#38BDF8">① 우하단 ··· 또는 공유 버튼 탭</b><br>' +
+    '<b style="color:#D4A843">② Safari로 열기 선택</b><br>' +
+    '<b style="color:#34D399">③ 그러면 바로 설치 안내가 나와요! 🎉</b>',
+    '확인했어요!');
+}
+
+// iOS 사파리 → 홈화면 추가 안내
+function _showIosInstallGuide(){
+  _showPopupMsg('📲', 'CGO-FULI 설치하기',
+    '딱 3번만 탭하면 완료! 아주 쉬워요 😊<br><br>' +
+    '<b style="color:#38BDF8">① 하단 공유 버튼 □↑ 탭</b><br>' +
+    '<b style="color:#D4A843">② 홈 화면에 추가 탭</b><br>' +
+    '<b style="color:#34D399">③ 추가 탭 → 완료! 🎉</b><br><br>' +
+    '<span style="font-size:11px;color:rgba(148,163,184,.5)">설치 후 알림 허용하면 메시지 알림이 와요 🔔</span>',
+    '바로 설치할게요!');
+}
+
+// 공통 팝업
+function _showPopupMsg(icon, title, bodyHtml, btnTxt){
+  var p = document.createElement('div');
+  p.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.92);display:flex;align-items:flex-end;justify-content:center;padding:20px;backdrop-filter:blur(8px);';
+  p.innerHTML='<div style="width:100%;max-width:480px;background:linear-gradient(160deg,#0a1628,#0d1f3c);border:1px solid rgba(212,168,67,.25);border-radius:24px 24px 16px 16px;padding:30px 24px;text-align:center;">'
+    +'<div style="font-size:36px;margin-bottom:12px;">'+icon+'</div>'
+    +'<div style="font-size:18px;font-weight:900;color:#34D399;margin-bottom:16px;">'+title+'</div>'
+    +'<div style="font-size:14px;color:rgba(240,230,200,.8);line-height:2.1;margin-bottom:22px;text-align:left;">'+bodyHtml+'</div>'
+    +'<button onclick="this.parentNode.parentNode.remove()" style="width:100%;padding:16px;background:linear-gradient(135deg,#D4A843,#F5C842);border:none;border-radius:14px;font-size:16px;font-weight:900;color:#050D1A;cursor:pointer;">'+btnTxt+'</button>'
+    +'</div>';
+  document.body.appendChild(p);
+}
+
+// 안드로이드 설치 프롬프트 저장
+window._cgoPwaPromptEvent = null;
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault();
+  window._cgoPwaPromptEvent = e;
+  // 설치 버튼 활성화 표시
+  var btns = document.querySelectorAll('.install-btn, .btn-main');
+  btns.forEach(function(b){ b.style.animation='glow 1.5s ease-in-out infinite'; });
+});
+
+// 페이지 로드 시 자동 환경 감지
+window.addEventListener('load', function(){
+  var ua = navigator.userAgent.toLowerCase();
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isInApp = /kakaotalk|fbav|instagram|naver|line/i.test(ua);
+  // iOS 인앱브라우저면 자동으로 안내 배너 표시
+  // ── iOS 카카오 인앱 → 페이지 열자마자 전체화면 안내 ──
+  if(isIOS && isInApp){
+    setTimeout(function(){
+      var overlay = document.createElement('div');
+      overlay.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;padding:24px;';
+      overlay.innerHTML=''
+        +'<div style="width:100%;max-width:400px;background:linear-gradient(160deg,#0a1628,#0d1f3c);border:2px solid rgba(212,168,67,.4);border-radius:24px;padding:32px 24px;text-align:center;">'
+        +'<div style="font-size:48px;margin-bottom:16px;">⚠️</div>'
+        +'<div style="font-size:20px;font-weight:900;color:#F87171;margin-bottom:8px;">카카오 브라우저</div>'
+        +'<div style="font-size:14px;font-weight:700;color:#D4A843;margin-bottom:20px;">설치를 위해 Safari가 필요해요!</div>'
+        +'<div style="background:rgba(255,255,255,.05);border-radius:14px;padding:16px;margin-bottom:20px;text-align:left;">'
+        +'<div style="font-size:13px;color:rgba(240,236,224,.9);line-height:2.2;">'
+        +'<span style="color:#38BDF8;font-weight:700">① </span>우하단 <b style="color:#38BDF8">··· 버튼</b> 탭<br>'
+        +'<span style="color:#D4A843;font-weight:700">② </span><b style="color:#D4A843">Safari로 열기</b> 선택<br>'
+        +'<span style="color:#34D399;font-weight:700">③ </span>Safari에서 <b style="color:#34D399">설치하기</b> 탭!'
+        +'</div>'
+        +'</div>'
+        +'<div style="font-size:11px;color:rgba(148,163,184,.5);margin-bottom:20px;">딱 3번만 탭하면 완료! 😊</div>'
+        +'<button onclick="this.parentNode.parentNode.remove()" '
+        +'style="width:100%;padding:16px;background:linear-gradient(135deg,#D4A843,#F5C842);border:none;border-radius:14px;font-size:16px;font-weight:900;color:#050D1A;cursor:pointer;">'
+        +'알겠어요! Safari로 열게요 🚀</button>'
+        +'</div>';
+      document.body.appendChild(overlay);
+    }, 500); // 0.5초 후 자동 표시
+  }
+  
+  // ── 안드로이드 카카오 → 자동으로 크롬 전환 안내 배너 ──
+  if(!isIOS && isInApp){
+    setTimeout(function(){
+      var banner = document.createElement('div');
+      banner.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:linear-gradient(135deg,#1A0A00,#2A1500);border-bottom:2px solid rgba(248,113,113,.5);padding:14px 16px;display:flex;align-items:center;gap:12px;';
+      banner.innerHTML=''
+        +'<span style="font-size:24px;">🔄</span>'
+        +'<span style="flex:1;font-size:12px;color:rgba(240,236,224,.9);line-height:1.7;">'
+        +'<b style="color:#F87171">카카오 브라우저에서는 설치가 안 돼요!</b><br>'
+        +'<span style="color:#D4A843">아래 버튼으로 크롬에서 여세요 👇</span>'
+        +'</span>';
+      var btn = document.createElement('button');
+      btn.textContent='크롬으로 열기 🚀';
+      btn.style.cssText='background:linear-gradient(135deg,#D4A843,#F5C842);border:none;border-radius:10px;padding:10px 14px;font-size:12px;font-weight:900;color:#050D1A;cursor:pointer;white-space:nowrap;flex-shrink:0;';
+      btn.onclick=function(){
+        location.href='intent://c-go-fuli.com#Intent;scheme=https;package=com.android.chrome;end';
+      };
+      banner.appendChild(btn);
+      document.body.prepend(banner);
+      // 배너 높이만큼 본문 밀기
+      document.body.style.paddingTop='80px';
+    }, 300);
+  }
+});
+</script>
+</body>
+</html>
