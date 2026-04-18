@@ -187,20 +187,31 @@ footer{position:relative;z-index:1;text-align:center;padding:24px;border-top:1px
     <div class="tech-card">
       <div class="t-icon">🌤️</div>
       <div class="t-name">날씨·기상 데이터</div>
-      <span class="t-status status-live">🟢 실시간 API</span>
+      <span class="t-status status-live">🟢 실시간 API · 위치 자동 연동</span>
       <div class="t-desc">
         <b style="color:var(--gold)">실제로 하는 것:</b><br>
-        Open-Meteo (무료 기상 API)로 현재 위치의
-        기온·습도·기압·풍속을 실시간 수신합니다.
-        GPS 권한 허용 시 정확한 현위치 기상 반영.<br><br>
+        Open-Meteo API로 현재 위치의
+        <b>기온·습도·기압·풍속을 실시간 수신</b>합니다.<br><br>
+
+        <b style="color:var(--gold)">위치 자동 연동 (4단계 우선순위):</b><br>
+        <b style="color:#34D399">1순위</b> — 정보 입력의 <b>현재 위치</b> 좌표 자동 사용<br>
+        <b style="color:#38BDF8">2순위</b> — 계산 후 저장된 현재 위치 좌표<br>
+        <b style="color:#A78BFA">3순위</b> — GPS 실시간 위치 (권한 허용 시)<br>
+        <b style="color:rgba(240,236,224,.4)">4순위</b> — 서울 기본값 (아무것도 없을 때)<br><br>
+
+        예: <b>부산 해운대 입력</b> → 부산 날씨 자동 수신 ✅<br>
+        해외 여행 중 → 현지 날씨 자동 반영 ✅<br><br>
+
         <b style="color:var(--gold)">역학 연동 방식:</b><br>
-        기압 1013hPa 기준 편차 → 오행 에너지 보정.
-        고기압(맑음) → 양 에너지 강화,
-        저기압(흐림) → 음 에너지 강화.<br><br>
+        기압 1013hPa 기준 편차 → 오행 에너지 보정.<br>
+        고기압(맑음) → 양(陽) 에너지 강화,
+        저기압(흐림) → 음(陰) 에너지 강화.<br><br>
+
         <b style="color:rgba(248,113,113,.8)">한계:</b><br>
-        GPS 미허용 시 서울 기본값 사용.
+        위치 미입력 + GPS 미허용 시 서울 기본값 사용.
+        인터넷 미연결 시 기본값(기온 15°C·기압 1013hPa) 적용.
       </div>
-      <div class="t-source">📡 open-meteo.com 무료 공개 API</div>
+      <div class="t-source">📡 open-meteo.com · 정보 입력 위치 자동 연동</div>
     </div>
 
     <!-- 방위/나침반 -->
@@ -305,16 +316,48 @@ footer{position:relative;z-index:1;text-align:center;padding:24px;border-top:1px
       <div class="t-source">📚 동서양 역학 전통 문헌 기반 · 22,000개 DB 내장 · NASA 행성 보정 병행</div>
     </div>
 
+    <!-- 주식 에너지 -->
+    <div class="tech-card">
+      <div class="t-icon">📈</div>
+      <div class="t-name">주식 에너지 분석</div>
+      <span class="t-status status-algo">✅ 2,765개 종목 내장</span>
+      <div class="t-desc">
+        <b style="color:var(--gold)">내장 종목 데이터베이스:</b><br>
+        코스피+코스닥 2,729개 · 나스닥·S&amp;P500·글로벌 36개.<br>
+        <b>총 2,765개 주요 종목</b>이 앱에 내장되어
+        검색 즉시 분석 가능합니다.<br><br>
+
+        <b style="color:var(--gold)">오행 EI지수 (Energy Index):</b><br>
+        각 종목의 <b>설립일 사주</b>와 <b>섹터별 오행</b>을 결합해
+        자동 계산합니다.<br>
+        IT·반도체 → 금(金) / 바이오 → 수(水)<br>
+        에너지·배터리 → 화(火) / 식품·유통 → 토(土)<br>
+        자동차·기계 → 목(木)<br><br>
+
+        <b style="color:var(--gold)">NASA × 오행 융합:</b><br>
+        오늘 내 ILI 점수 + 내 오행 + 종목 오행 EI지수 +
+        NASA 행성 위치(현재 시각 기준)를 결합해
+        투자자 본인의 에너지 상태와 종목 에너지의 궁합을 분석합니다.<br><br>
+
+        <b style="color:rgba(248,113,113,.8)">⚠️ 중요 안내:</b><br>
+        역학·오행·NASA 에너지 기반 <b>참고 정보</b>입니다.
+        실제 투자 결정은 본인 책임이며
+        전문 금융 상담사와 상의하세요.
+        실제 주가·수익률을 보장하지 않습니다.
+      </div>
+      <div class="t-source">📊 코스피·코스닥 전체 + 나스닥·S&amp;P500·글로벌 2,765개 · 오행 EI지수 자동 계산</div>
+    </div>
+
   </div>
 
   <!-- 투명성 요약 -->
   <div style="margin-top:24px;background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.2);border-radius:14px;padding:18px 20px;">
     <div style="font-size:12px;font-weight:900;color:var(--blue);margin-bottom:10px;">📋 기술 현황 요약</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;font-size:10px;color:rgba(240,236,224,.7);line-height:1.8;">
-      <div><span style="color:var(--green)">🟢 실시간 API</span><br>날씨(Open-Meteo) · NOAA 태양풍(Kp지수)</div>
+      <div><span style="color:var(--green)">🟢 실시간 API</span><br>날씨(Open-Meteo · 입력위치 자동연동) · NOAA 태양풍(Kp지수)</div>
       <div><span style="color:var(--gold)">🟡 내장 실시간 연산</span><br>NASA 행성 위치(현재 시각 기준) · 50대 역학 수식</div>
       <div><span style="color:var(--blue)">🔵 기기 센서 (참고용)</span><br>카메라 rPPG · 자이로 방위 · 가속도계 체온</div>
-      <div><span style="color:#A78BFA)">🟣 내장 데이터베이스</span><br>22,000개 역학 해석 DB · 외부 서버 불필요</div>
+      <div><span style="color:#A78BFA)">🟣 내장 데이터베이스</span><br>22,000개 역학 DB · 주식 2,765개 종목 · 외부 서버 불필요</div>
       <div><span style="color:var(--red)">🔴 정밀도 업그레이드 예정</span><br>rPPG 고도화(CHROM+FFT) · 혀 AI 분석 · v2.0</div>
     </div>
   </div>
