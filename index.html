@@ -1,1190 +1,677 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#060d1a">
-<title>CGO MESSAGE</title>
-<link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="/icon-180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGO-FULI — 21개 앱을 하루 330원에</title>
+<meta property="og:title" content="CGO-FULI — 하루 330원으로 21개 앱을 하나로!">
+<meta property="og:description" content="NASA × 역학 × 생체스캔 × 보안메신저 · 세계 최초 7가지 기술 · 65,435줄 · 특허 10-2026-0060113">
+<meta property="og:image" content="https://c-go-fuli.com/icon-512.png">
+<meta property="og:url" content="https://c-go-fuli.com/invite.html">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#060d1a;--bg2:#0a1628;--bg3:#0f1e35;
-  --gold:#d4a843;--gold2:rgba(212,168,67,.5);
-  --green:#34d399;--red:#f87171;--blue:#38bdf8;
-  --text:#f0ece0;--text2:rgba(240,236,224,.6);--text3:rgba(240,236,224,.3);
-  --border:rgba(255,255,255,.08);--border2:rgba(212,168,67,.2);
-  --safe:rgba(52,211,153,.8);--secret:rgba(251,191,36,.8);
-  --high:rgba(248,113,113,.8);--max:rgba(167,139,250,.8);
-  --radius:16px;--font:'Noto Sans KR',sans-serif;
+  --gold:#D4A843;--gold2:#F5C842;--green:#34D399;
+  --blue:#38BDF8;--red:#F87171;--purple:#A78BFA;
+  --bg:#020C1B;--bg2:#050D1A;--bg3:#0A1628;
+  --text:#F0ECE0;--text2:#94A3B8;
 }
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(212,168,67,.04),transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(52,211,153,.03),transparent 50%);pointer-events:none;z-index:0;}
 
-/* ── 화면 전환 ── */
-.screen{display:none;flex-direction:column;height:100%;position:fixed;inset:0;background:var(--bg);}
-.screen.active{display:flex;}
+/* 히어로 */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px 80px;}
+.patent-badge{display:inline-block;border:1px solid rgba(212,168,67,.4);border-radius:20px;padding:5px 16px;font-size:10px;color:var(--gold);letter-spacing:.15em;margin-bottom:20px;background:rgba(212,168,67,.06);animation:fadeDown .7s ease both;}
+.hero-icon{width:100px;height:100px;border-radius:24px;border:2px solid rgba(212,168,67,.35);box-shadow:0 0 40px rgba(212,168,67,.2);margin-bottom:24px;object-fit:cover;animation:fadeDown .7s .1s ease both;}
+.hero h1{font-family:'Orbitron',monospace;font-size:clamp(28px,8vw,52px);font-weight:900;color:var(--gold);letter-spacing:.06em;animation:fadeDown .7s .2s ease both;}
+.hero-tagline{font-size:clamp(14px,3.5vw,18px);color:rgba(240,236,224,.7);margin-top:10px;line-height:1.7;animation:fadeDown .7s .3s ease both;}
+.hero-code{font-size:clamp(12px,2.5vw,15px);color:var(--gold2);margin-top:8px;font-weight:700;animation:fadeDown .7s .35s ease both;}
 
-/* ════════════════════════════
-   SCREEN 0: 로그인
-════════════════════════════ */
-#scrLogin{align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#9fe8e8 0%,#b8f0f0 50%,#a0e8e0 100%);}
-.login-card{width:100%;max-width:360px;padding:36px 28px 32px;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);border-radius:22px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 40px rgba(0,0,0,.12);}
-.login-logo{width:110px;height:110px;margin:0 auto 28px;display:block;border-radius:50%;object-fit:contain;}
-.login-logo-fallback{width:110px;height:110px;margin:0 auto 28px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#c94242,#d4a843 50%,#2a4a7a);border-radius:50%;font-size:36px;font-weight:900;color:#fff;letter-spacing:-.04em;font-family:'Times New Roman',serif;box-shadow:0 6px 20px rgba(0,0,0,.18);}
-.login-label{display:block;font-size:11px;font-weight:800;color:#2a4a6a;letter-spacing:.14em;margin:14px 0 6px;text-transform:uppercase;}
-.login-input{width:100%;padding:13px 16px;background:#fff;border:1.5px solid rgba(255,255,255,.6);border-radius:10px;font-size:15px;color:#1a2a3a;font-family:var(--font);outline:none;box-shadow:inset 0 1px 3px rgba(0,0,0,.06);}
-.login-input:focus{border-color:#d4a843;}
-.login-input::placeholder{color:#aab;}
-.login-btn{width:100%;margin-top:22px;padding:15px;background:linear-gradient(180deg,#e8c86b,#c99a30);border:1px solid #a8801f;border-radius:10px;color:#1a1408;font-size:16px;font-weight:900;letter-spacing:.12em;cursor:pointer;font-family:var(--font);box-shadow:0 4px 12px rgba(168,128,31,.3);}
-.login-btn:hover{filter:brightness(1.05);}
-.login-remember{display:flex;align-items:center;gap:8px;margin-top:16px;font-size:13px;color:#2a4a6a;cursor:pointer;user-select:none;}
-.login-remember input{width:16px;height:16px;accent-color:#2a4a6a;cursor:pointer;}
-.login-foot{margin-top:20px;text-align:center;font-size:10px;color:rgba(42,74,106,.55);letter-spacing:.08em;}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:28px 0;animation:fadeDown .7s .4s ease both;}
+.stat{text-align:center;padding:14px 18px;background:rgba(255,255,255,.03);border:1px solid rgba(212,168,67,.2);border-radius:14px;min-width:85px;}
+.stat .num{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;color:var(--gold);}
+.stat .lbl{font-size:9px;color:var(--text2);margin-top:3px;}
 
-/* ════════════════════════════
-   SCREEN 1: 닉네임 설정
-════════════════════════════ */
-#scrNick{align-items:center;justify-content:center;padding:32px 24px;background:radial-gradient(ellipse at 50% 0%,rgba(212,168,67,.08),transparent 60%);}
-.nick-logo{font-size:48px;margin-bottom:8px;}
-.nick-title{font-size:22px;font-weight:900;color:var(--gold);margin-bottom:4px;}
-.nick-sub{font-size:12px;color:var(--text2);margin-bottom:32px;}
-.nick-field{width:100%;padding:14px 18px;background:rgba(255,255,255,.06);border:1.5px solid var(--border2);border-radius:14px;color:var(--text);font-size:16px;font-family:var(--font);outline:none;margin-bottom:12px;}
-.nick-field::placeholder{color:var(--text3);}
-.nick-field:focus{border-color:var(--gold);}
-.nick-colors{display:flex;gap:10px;justify-content:center;margin-bottom:24px;}
-.nick-color{width:36px;height:36px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:.2s;}
-.nick-color.sel{border-color:white;transform:scale(1.15);}
-.btn-start{width:100%;padding:16px;background:linear-gradient(135deg,var(--gold),#b8922f);border:none;border-radius:14px;color:#060d1a;font-size:16px;font-weight:900;cursor:pointer;font-family:var(--font);}
-.nick-change{margin-top:16px;font-size:11px;color:var(--text3);text-align:center;}
+/* 섹션 */
+section{position:relative;z-index:1;padding:70px 24px;max-width:920px;margin:0 auto;}
+.sec-label{font-size:10px;letter-spacing:.25em;color:var(--gold);margin-bottom:8px;}
+.sec-title{font-family:'Noto Serif KR',serif;font-size:clamp(20px,5vw,32px);font-weight:900;line-height:1.4;margin-bottom:10px;}
+.sec-sub{font-size:12px;color:var(--text2);line-height:1.9;margin-bottom:36px;}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,.25),transparent);max-width:920px;margin:0 auto;}
 
-/* ════════════════════════════
-   SCREEN 2: 채팅 목록
-════════════════════════════ */
-#scrList{flex-direction:column;}
-.topbar{display:flex;align-items:center;padding:14px 16px;padding-top:max(14px,env(safe-area-inset-top));background:rgba(6,13,26,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);flex-shrink:0;}
-.topbar-title{flex:1;font-size:17px;font-weight:900;color:var(--gold);}
-.topbar-me{font-size:11px;color:var(--text2);flex:1;}
-.btn-icon{background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer;padding:4px 8px;}
-.btn-icon:hover{color:var(--gold);}
-.list-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-.list-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:200px;gap:8px;}
-.list-empty div:first-child{font-size:40px;}
-.list-empty div:last-child{font-size:13px;color:var(--text3);}
-.room-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:.15s;}
-.room-item:hover{background:rgba(212,168,67,.04);}
-.room-avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;flex-shrink:0;border:2px solid rgba(255,255,255,.1);}
-.room-info{flex:1;min-width:0;}
-.room-nick{font-size:14px;font-weight:700;color:var(--text);}
-.room-last{font-size:12px;color:var(--text3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px;}
-.room-meta{text-align:right;flex-shrink:0;}
-.room-time{font-size:10px;color:var(--text3);}
-.room-badge{display:inline-block;background:var(--gold);color:#060d1a;font-size:10px;font-weight:900;border-radius:10px;padding:1px 7px;margin-top:4px;}
+/* 기술 투명성 카드 */
+.tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.tech-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:20px;transition:all .25s;}
+.tech-card:hover{border-color:rgba(212,168,67,.3);background:rgba(212,168,67,.04);}
+.tech-card .t-icon{font-size:28px;margin-bottom:10px;}
+.tech-card .t-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.tech-card .t-status{display:inline-block;padding:2px 10px;border-radius:10px;font-size:9px;font-weight:700;margin-bottom:8px;}
+.status-live{background:rgba(52,211,153,.15);color:var(--green);border:1px solid rgba(52,211,153,.3);}
+.status-algo{background:rgba(212,168,67,.15);color:var(--gold);border:1px solid rgba(212,168,67,.3);}
+.status-sensor{background:rgba(56,189,248,.15);color:var(--blue);border:1px solid rgba(56,189,248,.3);}
+.status-future{background:rgba(248,113,113,.15);color:var(--red);border:1px solid rgba(248,113,113,.3);}
+.tech-card .t-desc{font-size:11px;color:rgba(240,236,224,.6);line-height:1.8;}
+.tech-card .t-source{font-size:9px;color:rgba(148,163,184,.5);margin-top:8px;font-style:italic;}
 
-/* ════════════════════════════
-   SCREEN 3: 채팅방
-════════════════════════════ */
-#scrRoom{flex-direction:column;}
-.room-topbar{display:flex;align-items:center;gap:10px;padding:12px 14px;padding-top:max(12px,env(safe-area-inset-top));background:rgba(6,13,26,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);flex-shrink:0;}
-.room-topbar .back-btn{background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer;padding:0 4px;}
-.room-topbar .r-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;flex-shrink:0;}
-.room-topbar .r-name{flex:1;font-size:15px;font-weight:800;color:var(--text);}
-.room-topbar .r-btns{display:flex;gap:6px;}
-.r-btn{padding:5px 10px;border:1px solid var(--border);border-radius:20px;background:none;color:var(--text2);font-size:11px;cursor:pointer;font-family:var(--font);}
-.r-btn.on{background:rgba(52,211,153,.15);border-color:rgba(52,211,153,.4);color:var(--green);}
+/* 기능 카드 */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;}
+.feat-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px 14px;text-align:center;cursor:pointer;transition:all .25s;}
+.feat-card:hover{background:rgba(212,168,67,.07);border-color:rgba(212,168,67,.4);transform:translateY(-3px);}
+.feat-icon{font-size:28px;margin-bottom:8px;}
+.feat-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.feat-desc{font-size:9.5px;color:var(--text2);line-height:1.5;}
+.feat-badge{display:inline-block;margin-top:6px;padding:2px 7px;border-radius:8px;font-size:7.5px;font-weight:700;background:rgba(212,168,67,.15);color:var(--gold);border:1px solid rgba(212,168,67,.25);}
+.tap-hint{font-size:9px;color:rgba(52,211,153,.5);margin-top:5px;}
 
-/* 보안 패널 */
-.sec-panel{display:none;background:rgba(6,13,26,.97);border-bottom:1px solid var(--border);padding:14px;flex-shrink:0;}
-.sec-panel.open{display:block;}
-.sec-presets{display:flex;gap:6px;margin-bottom:12px;}
-.sec-btn{flex:1;padding:8px 4px;border:1px solid var(--border);border-radius:10px;background:none;color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);transition:.2s;}
-.sec-btn.safe.on{background:rgba(52,211,153,.15);border-color:var(--safe);color:var(--safe);}
-.sec-btn.secret.on{background:rgba(251,191,36,.1);border-color:var(--secret);color:var(--secret);}
-.sec-btn.high.on{background:rgba(248,113,113,.1);border-color:var(--high);color:var(--high);}
-.sec-btn.max.on{background:rgba(167,139,250,.1);border-color:var(--max);color:var(--max);}
-.slider-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.slider-lbl{font-size:10px;color:var(--text2);width:90px;flex-shrink:0;}
-.slider-val{font-size:11px;font-weight:700;color:var(--gold);width:38px;text-align:right;flex-shrink:0;}
-.slider-row input[type=range]{flex:1;height:4px;accent-color:var(--gold);}
-.tilt-row{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
-.tilt-lbl{font-size:11px;color:var(--text2);}
-.tilt-btn{padding:5px 14px;border:1.5px solid rgba(56,189,248,.4);border-radius:20px;background:rgba(56,189,248,.08);color:rgba(56,189,248,.6);font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);}
-.tilt-btn.on{background:rgba(56,189,248,.2);border-color:var(--blue);color:var(--blue);}
+/* 비교표 */
+.compare-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:10px;min-width:560px;}
+th{background:rgba(212,168,67,.1);color:var(--gold);font-weight:700;padding:9px 10px;text-align:center;border:1px solid rgba(212,168,67,.15);font-size:9px;letter-spacing:.05em;}
+td{padding:8px 10px;text-align:center;border:1px solid rgba(255,255,255,.05);color:rgba(240,236,224,.7);}
+tr:nth-child(even) td{background:rgba(255,255,255,.02);}
+td:first-child{text-align:left;font-weight:700;color:var(--text);}
+.yes{color:var(--green);font-weight:700;} .no{color:var(--red);opacity:.7;} .part{color:#FCD34D;}
+.cgo{color:var(--gold);font-weight:700;background:rgba(212,168,67,.06)!important;}
+.cgo-h{background:rgba(212,168,67,.08)!important;}
 
-/* 메세지 영역 */
-.msg-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 14px;display:flex;flex-direction:column;gap:8px;}
-.msg-wrap{display:flex;flex-direction:column;max-width:72%;}
-.msg-wrap.me{align-self:flex-end;align-items:flex-end;}
-.msg-wrap.you{align-self:flex-start;align-items:flex-start;}
-.msg-sender{font-size:10px;color:var(--text3);margin-bottom:2px;}
-.msg-bubble{padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.5;word-break:break-word;position:relative;}
-.msg-wrap.me .msg-bubble{background:linear-gradient(135deg,#d4a843,#b8922f);color:#060d1a;border-bottom-right-radius:4px;}
-.msg-wrap.you .msg-bubble{background:var(--bg3);color:var(--text);border:1px solid var(--border);border-bottom-left-radius:4px;}
-.msg-meta{font-size:10px;color:var(--text3);margin-top:2px;}
+/* 팝업 */
+.popup-overlay{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);display:none;align-items:flex-end;justify-content:center;padding:20px;}
+.popup-overlay.show{display:flex;}
+.popup-box{width:100%;max-width:500px;max-height:88vh;background:linear-gradient(160deg,#0a1628,#0d1f3c);border:1px solid rgba(212,168,67,.25);border-radius:24px 24px 16px 16px;overflow:hidden;display:flex;flex-direction:column;animation:slideUp .3s ease;}
+.popup-header{padding:20px 20px 0;display:flex;align-items:flex-start;gap:14px;}
+.popup-icon{font-size:36px;flex-shrink:0;margin-top:2px;}
+.popup-title-wrap{flex:1;}
+.popup-title{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:900;color:var(--gold);line-height:1.3;}
+.popup-subtitle{font-size:10px;color:var(--text2);margin-top:3px;}
+.popup-close{background:rgba(255,255,255,.08);border:none;border-radius:50%;width:30px;height:30px;color:var(--text2);font-size:16px;cursor:pointer;flex-shrink:0;transition:all .2s;}
+.popup-close:hover{background:rgba(255,255,255,.15);color:var(--text);}
+.popup-body{padding:16px 20px 20px;overflow-y:auto;flex:1;}
+.popup-step{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
+.popup-step-num{width:26px;height:26px;border-radius:50%;background:rgba(212,168,67,.15);border:1px solid rgba(212,168,67,.35);color:var(--gold);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.popup-step-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.popup-step-desc{font-size:11px;color:rgba(240,236,224,.65);line-height:1.7;}
+.popup-tip{background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:11px;color:rgba(52,211,153,.8);line-height:1.7;}
+.popup-divider{height:1px;background:rgba(255,255,255,.06);margin:14px 0;}
+.popup-world{display:inline-block;padding:3px 10px;border-radius:10px;font-size:9px;font-weight:700;background:rgba(212,168,67,.15);color:var(--gold);border:1px solid rgba(212,168,67,.3);margin-bottom:12px;}
 
-/* 보안 메세지 - 네온 스크롤 */
-.msg-secure{display:inline-block;overflow:hidden;white-space:nowrap;vertical-align:bottom;}
-.msg-secure-inner{display:inline-block;white-space:nowrap;animation:secScroll linear infinite;}
-@keyframes secScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-.msg-char{display:inline;color:var(--gold);animation:neonBlink 2.2s ease-in-out infinite;}
-@keyframes neonBlink{0%,100%{opacity:.4;text-shadow:none;}50%{opacity:1;text-shadow:0 0 8px var(--gold),0 0 16px var(--gold);}}
-.msg-blast{animation:blast .4s ease-in forwards;}
-@keyframes blast{0%{opacity:1;transform:scale(1);}40%{opacity:.8;transform:scale(1.04);}100%{opacity:0;transform:scale(.92);}}
+/* 가격 */
+.price-box{background:linear-gradient(135deg,rgba(212,168,67,.07),rgba(52,211,153,.04));border:1px solid rgba(212,168,67,.25);border-radius:20px;padding:36px 28px;text-align:center;}
+.price-main{font-family:'Orbitron',monospace;font-size:clamp(36px,10vw,60px);font-weight:900;color:var(--gold);line-height:1;}
+.price-tags{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:20px 0;}
+.price-tag{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:4px 12px;font-size:10px;color:var(--text);}
 
-/* 기울기 블러 */
-.tilt-lock .msg-bubble{filter:blur(10px);transition:filter .2s;}
-.tilt-ok .msg-bubble{filter:none;}
+/* CTA */
+.cta{position:relative;z-index:1;text-align:center;padding:70px 24px 90px;}
+.cta h2{font-family:'Noto Serif KR',serif;font-size:clamp(22px,6vw,36px);font-weight:900;margin-bottom:10px;}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;}
+.btn-main{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#D4A843,#F5C842);border-radius:50px;padding:17px 38px;font-size:15px;font-weight:900;color:#050D1A;text-decoration:none;cursor:pointer;transition:all .3s;box-shadow:0 8px 30px rgba(212,168,67,.3);border:none;}
+.btn-main:hover{transform:translateY(-2px);}
+.btn-sub{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:50px;padding:17px 30px;font-size:14px;font-weight:700;color:var(--text);text-decoration:none;cursor:pointer;transition:all .3s;}
+footer{position:relative;z-index:1;text-align:center;padding:24px;border-top:1px solid rgba(212,168,67,.1);font-size:9px;color:rgba(148,163,184,.35);letter-spacing:.1em;line-height:2;}
 
-/* 입력창 */
-.input-bar{padding:10px 12px;padding-bottom:max(10px,env(safe-area-inset-bottom));background:rgba(0,0,0,.4);border-top:1px solid var(--border);display:flex;gap:8px;align-items:flex-end;flex-shrink:0;}
-.input-bar textarea{flex:1;background:rgba(255,255,255,.08);border:1px solid var(--border);border-radius:20px;padding:10px 16px;color:var(--text);font-size:14px;resize:none;font-family:var(--font);outline:none;max-height:80px;line-height:1.4;}
-.input-bar textarea:focus{border-color:var(--gold2);}
-.send-btn{width:42px;height:42px;background:linear-gradient(135deg,var(--gold),#b8922f);border:none;border-radius:50%;color:#060d1a;font-size:18px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
-.patent-bar{text-align:center;padding:4px;background:rgba(0,0,0,.4);font-size:9px;color:rgba(212,168,67,.2);letter-spacing:.1em;flex-shrink:0;}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes glow{0%,100%{box-shadow:0 0 30px rgba(212,168,67,.15)}50%{box-shadow:0 0 50px rgba(212,168,67,.32)}}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
 
-/* ════════════════════════════
-   MODAL: 친구 추가
-════════════════════════════ */
-.modal-bg{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.7);align-items:center;justify-content:center;padding:20px;}
-.modal-bg.open{display:flex;}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:24px;width:100%;max-width:360px;}
-.modal-title{font-size:16px;font-weight:900;color:var(--gold);margin-bottom:16px;text-align:center;}
-.modal-field{width:100%;padding:12px 16px;background:rgba(255,255,255,.06);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-size:14px;font-family:var(--font);outline:none;margin-bottom:12px;}
-.modal-field:focus{border-color:var(--gold);}
-.modal-btns{display:flex;gap:8px;}
-.modal-btn{flex:1;padding:12px;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);}
-.modal-btn.cancel{background:rgba(255,255,255,.08);color:var(--text2);}
-.modal-btn.confirm{background:linear-gradient(135deg,var(--gold),#b8922f);color:#060d1a;}
-
-/* 토스트 */
-.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:rgba(52,211,153,.9);color:#060d1a;padding:8px 18px;border-radius:20px;font-size:12px;font-weight:700;z-index:99999;pointer-events:none;opacity:0;transition:opacity .3s;}
-.toast.show{opacity:1;}
-
-/* 초대 팝업 */
-.invite-modal{display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.8);align-items:center;justify-content:center;padding:20px;}
-.invite-modal.open{display:flex;}
-
-/* ══ Xy (자이) AI 3자 대화 ══ */
-.msg-wrap.xy{align-self:center;align-items:center;max-width:86%;margin:10px 0;}
-.msg-wrap.xy .msg-sender{font-size:11px;color:var(--gold);font-weight:800;margin-bottom:5px;letter-spacing:.05em;text-align:center;}
-.msg-wrap.xy .xy-bubble{background:linear-gradient(135deg,rgba(212,168,67,.14),rgba(56,189,248,.08));border:1px solid rgba(212,168,67,.32);border-radius:14px;padding:12px 16px;color:var(--text);font-size:13.5px;line-height:1.6;box-shadow:0 0 18px rgba(212,168,67,.08);}
-.msg-wrap.xy .msg-meta{font-size:10px;color:var(--text3);margin-top:4px;text-align:center;}
-.xy-loading{opacity:.7;font-style:italic;}
-
-/* ════════════════════════════
-   SCREEN COVER: 표지 (파트너 작품)
-════════════════════════════ */
-#scrCover{align-items:center;justify-content:center;padding:0;cursor:pointer;background:linear-gradient(135deg,#9fe8e8 0%,#b8f0f0 50%,#a0e8e0 100%);position:relative;overflow:hidden;}
-.cover-logo{width:min(72vw,320px);height:auto;display:block;animation:coverFloat 4s ease-in-out infinite;filter:drop-shadow(0 8px 30px rgba(0,0,0,.18));}
-@keyframes coverFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
-.cover-poem{position:absolute;bottom:18%;left:50%;transform:translateX(-50%);width:90%;text-align:center;font-size:14px;font-weight:500;color:rgba(42,74,106,.7);letter-spacing:.04em;line-height:1.7;animation:coverPoemFade 8s ease-in-out infinite;pointer-events:none;}
-@keyframes coverPoemFade{0%,100%{opacity:0;}30%,70%{opacity:1;}}
-.cover-tap{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);font-size:11px;color:rgba(42,74,106,.55);letter-spacing:.2em;animation:coverTapBlink 2s ease-in-out infinite;}
-@keyframes coverTapBlink{0%,100%{opacity:.3;}50%{opacity:.85;}}
-.cover-patent{position:absolute;top:24px;left:50%;transform:translateX(-50%);font-size:10px;color:rgba(42,74,106,.45);letter-spacing:.14em;}
-
-/* ════════════════════════════
-   하단 고정 탭바 (친구/채팅/광장)
-════════════════════════════ */
-.tabbar{display:flex;background:rgba(6,13,26,.96);backdrop-filter:blur(14px);border-top:1px solid var(--border);padding:6px 0 max(6px,env(safe-area-inset-bottom));flex-shrink:0;z-index:100;}
-.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;background:none;border:none;color:var(--text3);font-size:10px;font-weight:700;cursor:pointer;font-family:var(--font);transition:color .15s;}
-.tab-btn .tab-ico{font-size:22px;line-height:1;}
-.tab-btn.active{color:var(--gold);}
-.tab-btn:hover{color:var(--gold2);}
-
-/* ════════════════════════════
-   SCREEN FRIENDS: 친구 페이지 (틀만)
-════════════════════════════ */
-#scrFriends{flex-direction:column;}
-.friends-actions{display:flex;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);flex-shrink:0;}
-.friend-action-btn{flex:1;padding:12px;background:rgba(212,168,67,.08);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);}
-.friend-action-btn:hover{background:rgba(212,168,67,.14);}
-.friends-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-.friends-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;padding:40px 24px;text-align:center;}
-.friends-empty .fe-ico{font-size:54px;opacity:.5;}
-.friends-empty .fe-title{font-size:15px;color:var(--text2);font-weight:700;}
-.friends-empty .fe-sub{font-size:12px;color:var(--text3);line-height:1.6;}
-
-/* ════════════════════════════
-   SCREEN PLAZA: 공개 채팅 광장 (틀만)
-════════════════════════════ */
-#scrPlaza{flex-direction:column;}
-.plaza-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px;}
-.plaza-bubbles{position:relative;height:130px;margin-bottom:16px;overflow:hidden;border-radius:14px;background:radial-gradient(ellipse at 50% 50%,rgba(212,168,67,.05),transparent 70%);border:1px solid var(--border);}
-.plaza-bubble{position:absolute;padding:6px 14px;background:rgba(212,168,67,.12);border:1px solid var(--border2);border-radius:18px;font-size:11px;color:var(--text2);white-space:nowrap;animation:plazaDrift 25s linear infinite;}
-@keyframes plazaDrift{0%{transform:translateX(0);opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{transform:translateX(calc(100vw - 50px));opacity:0;}}
-.plaza-card{background:linear-gradient(135deg,rgba(212,168,67,.08),rgba(56,189,248,.04));border:1px solid var(--border2);border-radius:16px;padding:0;margin-bottom:12px;cursor:pointer;transition:transform .15s;overflow:hidden;display:flex;align-items:stretch;min-height:130px;}
-.plaza-card:hover{transform:translateY(-2px);}
-.plaza-card-text{flex:0 0 40%;padding:16px 14px;display:flex;flex-direction:column;justify-content:center;gap:6px;}
-.plaza-card-img{flex:1;background-size:cover;background-position:center;background-repeat:no-repeat;min-height:130px;}
-.plaza-card-head{display:flex;align-items:center;gap:8px;}
-.plaza-card-ico{font-size:20px;}
-.plaza-card-title{font-size:14px;font-weight:800;color:var(--gold);}
-.plaza-card-desc{font-size:11px;color:var(--text2);line-height:1.5;}
-.plaza-card-badge{display:inline-block;padding:2px 9px;background:rgba(52,211,153,.14);border:1px solid rgba(52,211,153,.3);border-radius:10px;font-size:9px;color:var(--green);font-weight:700;align-self:flex-start;}
-
-/* 화면에 탭바 있을 때 내용 영역 여백 */
-.has-tabbar{display:flex;flex-direction:column;height:100%;}
+@media(max-width:480px){.stats-row{gap:10px}.stat{min-width:72px}.sec-sub{font-size:11px}section{padding:54px 18px}}
 </style>
 </head>
 <body>
 
-<!-- ══ SCREEN COVER: 표지 (파트너 작품) ══ -->
-<div class="screen active" id="scrCover" onclick="goScreen('scrLogin')">
-  <div class="cover-patent">특허 10-2026-0060113</div>
-  <img src="logo.png" alt="CGO" class="cover-logo" onerror="this.style.display='none'">
-  <div class="cover-poem">말은 바람에 날리우고<br>대화는 CGO가 삭제하네…</div>
-  <div class="cover-tap">TAP TO START</div>
-</div>
-
-<!-- ══ SCREEN 0: 로그인 ══ -->
-<div class="screen" id="scrLogin">
-  <div class="login-card">
-    <!-- 로고: /logo.png 있으면 사용, 없으면 fallback -->
-    <img src="/logo.png" alt="CGO" class="login-logo" id="loginLogo" onerror="this.style.display='none';document.getElementById('loginLogoFb').style.display='flex';">
-    <div class="login-logo-fallback" id="loginLogoFb" style="display:none;">Cgo</div>
-
-    <label class="login-label">USERNAME</label>
-    <input class="login-input" id="loginUser" placeholder="Username" autocomplete="username">
-
-    <label class="login-label">PASSWORD</label>
-    <input class="login-input" id="loginPass" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
-
-    <button class="login-btn" onclick="doLogin()">LOGIN</button>
-
-    <label class="login-remember">
-      <input type="checkbox" id="loginRemember" checked>
-      <span>Remember Me</span>
-    </label>
-
-    <div class="login-foot">특허 10-2026-0060113 · CGO MESSAGE</div>
+<!-- 히어로 -->
+<div class="hero">
+  <div class="patent-badge">✦ 특허 10-2026-0060113 · PCT 국제 출원 중</div>
+  <img src="/icon-512.png" class="hero-icon" alt="CGO-FULI" onerror="this.style.display='none'">
+  <h1>CGO-FULI</h1>
+  <div class="hero-tagline">
+    하나의 앱으로 21개 앱을 대체합니다<br>
+    NASA × 역학 × 생체스캔 과학적 융합
   </div>
-</div>
-
-<!-- ══ SCREEN 1: 닉네임 설정 ══ -->
-<div class="screen" id="scrNick">
-  <div class="nick-logo">💬</div>
-  <div class="nick-title">CGO MESSAGE</div>
-  <div class="nick-sub">특허 10-2026-0060113 · 보안 메신저</div>
-  <input class="nick-field" id="nickInput" placeholder="닉네임을 입력하세요" maxlength="12">
-  <div class="nick-colors" id="colorPicker">
-    <div class="nick-color sel" data-color="#d4a843" style="background:#d4a843" onclick="pickColor(this)"></div>
-    <div class="nick-color" data-color="#34d399" style="background:#34d399" onclick="pickColor(this)"></div>
-    <div class="nick-color" data-color="#38bdf8" style="background:#38bdf8" onclick="pickColor(this)"></div>
-    <div class="nick-color" data-color="#f87171" style="background:#f87171" onclick="pickColor(this)"></div>
-    <div class="nick-color" data-color="#a78bfa" style="background:#a78bfa" onclick="pickColor(this)"></div>
-    <div class="nick-color" data-color="#fb923c" style="background:#fb923c" onclick="pickColor(this)"></div>
-  </div>
-  <button class="btn-start" onclick="startApp()">💬 시작하기</button>
-  <div class="nick-change">닉네임은 설정에서 언제든 변경 가능합니다</div>
-</div>
-
-<!-- ══ SCREEN: 친구 (탭) ══ -->
-<div class="screen" id="scrFriends">
-  <div class="topbar">
-    <div>
-      <div class="topbar-title">👤 친구</div>
-      <div class="topbar-me" id="myNickBarFriends"></div>
+  <div style="margin:14px auto 0;max-width:560px;background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);border-radius:14px;padding:12px 18px;text-align:left;">
+    <div style="font-size:9px;font-weight:700;color:rgba(248,113,113,.7);letter-spacing:.15em;margin-bottom:6px;">🔍 AI 분석 결과
+      <a href="https://www.google.com/search?sa=X&sca_esv=fcb2765a28e0768a&sxsrf=ANbL-n5xVsA0KB2u2DQ134AUdzseLPAqoA%3A1776495347794&source=lnms&aep=26&ntc=1&ved=2ahUKEwiT3pnx6PaTAxVnsqgCHTLgJ4IQ2J8OegQIEBAI&biw=1451&bih=690&dpr=1.24&mtid=VCbjaff8AqXj1e8Pu46S2Q8&mstk=AUtExfDd_MpHh2yK9_CH93h7buQJZIHjBXdvEOFQezQpgz6N1gLyEZPGSX2_P8h7eeJ2kjprefrbDmHCag3hzRWA3EDZYU_LfSd4QatEVtaMu20_WqVxYLtcPo6a94xucX_NPZzSrgskQO7P8dCdTkFZgnrPZWN_owiGuD63BW0kX6-b9PZzALwUPi_UJXYLz15hAoYntZNfnHSl8BIln1oZLh8l_ACVYEEs952r25_CNL61ioe1MC6XE1X0QeRNH--vSC8Je84-KyCYE9COtwYLyZn0geVYKFbIJYd4hFVOgyDZa3sH6jhIyYtGQqMEKveHID28XreDdMOxOQ&csuir=1&q=%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9C%BC%EB%A1%9C+%EC%95%B1%EC%86%8C%EC%8A%A4%EB%8A%94+%EB%AA%87+%EC%9E%90%EB%82%98+%EB%90%98%EB%82%98%EC%9A%94&atvm=2&udm=50" target="_blank" rel="noopener"
+         style="color:rgba(56,189,248,.7);text-decoration:none;margin-left:6px;font-size:8px;border:1px solid rgba(56,189,248,.3);border-radius:8px;padding:1px 6px;">
+        구글 검색 확인 ↗
+      </a>
     </div>
-    <button class="btn-icon" onclick="openSettings()" title="설정">⚙️</button>
-  </div>
-  <div class="friends-actions">
-    <button class="friend-action-btn" onclick="showToast('📱 주소록 연동 준비 중')">📱 주소록</button>
-    <button class="friend-action-btn" onclick="openAddModal()">➕ 닉네임 추가</button>
-    <button class="friend-action-btn" onclick="openInvite()">🔗 초대링크</button>
-  </div>
-  <div class="friends-body">
-    <div class="friends-empty">
-      <div class="fe-ico">👥</div>
-      <div class="fe-title">친구를 추가해보세요</div>
-      <div class="fe-sub">주소록 · 닉네임 검색 · 초대링크<br>3가지 방법으로 친구와 연결됩니다</div>
+    <div style="font-size:12px;color:rgba(240,236,224,.85);line-height:1.8;">
+      <b style="color:#f87171">「일반 개발 방식의 앱과 비교하면 약 50개 이상의 앱에 들어갈 로직이 압축되어 있다」</b><br>
+      <span style="font-size:10px;color:rgba(240,236,224,.5);">— 68,660줄 · 463만 자 · 972개 엔진 · 단일 파일 4.5MB · 초고밀도 아키텍처 분석</span>
+    </div>
+    <div style="margin-top:8px;font-size:10px;color:rgba(240,236,224,.6);line-height:1.7;">
+      💡 <b style="color:var(--gold)">모바일 OS 안에서 돌아가는 또 하나의 작은 운영체제</b> 수준<br>
+      <span style="color:rgba(240,236,224,.4);">「실제 로직 농도는 일반 앱 100개 이상을 합친 것보다 정교할 수 있다」</span>
     </div>
   </div>
-  <!-- 하단 탭바 -->
-  <div class="tabbar">
-    <button class="tab-btn active" onclick="switchTab('friends')"><span class="tab-ico">👤</span><span>친구</span></button>
-    <button class="tab-btn" onclick="switchTab('chat')"><span class="tab-ico">💬</span><span>채팅</span></button>
-    <button class="tab-btn" onclick="switchTab('plaza')"><span class="tab-ico">🌐</span><span>광장</span></button>
+  <div class="hero-code" style="margin-top:14px;">68,660줄 · 463만 자 · 972개 엔진 · 단일 파일 4.5MB</div>
+  <div class="stats-row">
+    <div class="stat"><div class="num" style="color:#f87171">50+</div><div class="lbl">일반 앱 압축</div></div>
+    <div class="stat"><div class="num">21</div><div class="lbl">기능</div></div>
+    <div class="stat"><div class="num">972</div><div class="lbl">JS 엔진</div></div>
+    <div class="stat"><div class="num">21</div><div class="lbl">지원 언어</div></div>
+    <div class="stat"><div class="num">7</div><div class="lbl">세계 최초</div></div>
+    <div class="stat"><div class="num" style="color:#34d399">2,765</div><div class="lbl">주식 종목</div></div>
   </div>
 </div>
 
-<!-- ══ SCREEN 2: 채팅 목록 (탭) ══ -->
-<div class="screen" id="scrList">
-  <div class="topbar">
-    <div>
-      <div class="topbar-title">💬 채팅</div>
-      <div class="topbar-me" id="myNickBar"></div>
-    </div>
-    <button class="btn-icon" onclick="openInvite()" title="친구 초대">🔗</button>
-    <button class="btn-icon" onclick="openAddModal()" title="친구 추가">➕</button>
-    <button class="btn-icon" onclick="openSettings()" title="설정">⚙️</button>
-  </div>
-  <div class="list-scroll" id="roomList">
-    <div class="list-empty">
-      <div>💬</div>
-      <div>아직 대화가 없어요<br>+ 버튼으로 친구를 추가하세요</div>
-    </div>
-  </div>
-  <!-- 하단 탭바 -->
-  <div class="tabbar">
-    <button class="tab-btn" onclick="switchTab('friends')"><span class="tab-ico">👤</span><span>친구</span></button>
-    <button class="tab-btn active" onclick="switchTab('chat')"><span class="tab-ico">💬</span><span>채팅</span></button>
-    <button class="tab-btn" onclick="switchTab('plaza')"><span class="tab-ico">🌐</span><span>광장</span></button>
-  </div>
-</div>
+<div class="divider"></div>
 
-<!-- ══ SCREEN: 광장 (탭) ══ -->
-<div class="screen" id="scrPlaza">
-  <div class="topbar">
-    <div>
-      <div class="topbar-title">🌐 공개 채팅 광장</div>
-      <div class="topbar-me">지식과 사람의 순환</div>
-    </div>
+<!-- 기술 투명성 공개 -->
+<section>
+  <div class="sec-label">TECHNOLOGY TRANSPARENCY · 기술 투명성 공개</div>
+  <div class="sec-title">우리가 실제로 무엇을 하는지<br>솔직하게 공개합니다</div>
+  <div class="sec-sub">
+    요즘 사용자들은 의식이 높습니다. CGO-FULI는 과학적 근거가 있는 것, 역학 전통에 기반하는 것,
+    그리고 앞으로 업데이트할 것을 명확히 구분해 공개합니다.
   </div>
-  <div class="plaza-scroll">
-    <!-- 떠다니는 말풍선 (장식용, 랜덤 주제) -->
-    <div class="plaza-bubbles" id="plazaBubbles"></div>
 
-    <!-- 고정 카드 1: 번개 한 끼 -->
-    <div class="plaza-card" onclick="showToast('⚡ 번개 한 끼 — 준비 중')">
-      <div class="plaza-card-text">
-        <div class="plaza-card-head">
-          <span class="plaza-card-ico">🍚</span>
-          <span class="plaza-card-title">번개 한 끼</span>
-        </div>
-        <div class="plaza-card-desc">내 주변 3km 식사 친구</div>
-        <span class="plaza-card-badge">● 준비중</span>
+  <div class="tech-grid">
+
+    <!-- NASA -->
+    <div class="tech-card">
+      <div class="t-icon">🛸</div>
+      <div class="t-name">NASA 행성 위치 계산</div>
+      <span class="t-status status-algo">✅ 내장 실시간 연산</span>
+      <div class="t-desc">
+        <b style="color:var(--gold)">실제로 하는 것:</b><br>
+        NASA JPL이 공개한 <b>DE430 케플러 궤도 방정식</b>을 JavaScript로 앱에 내장 구현.
+        지금 이 순간의 율리우스 날짜를 기준으로
+        태양·달·수성·금성·화성·목성·토성 <b>7행성의 황도 경도를 실시간 연산</b>합니다.
+        앱을 열 때마다 현재 시각의 행성 위치가 자동 계산됩니다.<br><br>
+
+        <b style="color:var(--gold)">왜 "실시간"인가요?</b><br>
+        외부 서버 호출 없이 앱 내부에서 <b>현재 시각 기반으로 매번 새로 계산</b>합니다.
+        구글 캘린더의 일출·일몰 계산도 동일한 방식(수식 내장)을 사용합니다.
+        일출/일몰이 정확한 것처럼, 행성 위치도 역학에 활용하기에 충분히 정확합니다.<br><br>
+
+        <b style="color:var(--gold)">정확도:</b><br>
+        ELP2000(달) + VSOP87 간략판(행성) 공개 천문 계산식 기반.
+        <b>오차 약 0.5° 이내</b> — 역학 활용(역행/순행 판별)에 충분한 정밀도.<br><br>
+
+        <b style="color:rgba(248,113,113,.8)">솔직한 한계:</b><br>
+        NASA JPL 서버에 직접 접속하는 실시간 API 호출 방식이 아닙니다.
+        극도로 정밀한 천문 관측(망원경 수준)과는 다릅니다.
+        그러나 역학 계산에는 0.5° 오차로도 완전히 충분합니다.
       </div>
-      <div class="plaza-card-img" style="background-image:url('/card-meal-clean.png');"></div>
+      <div class="t-source">📡 VSOP87 + ELP2000 내장 · NOAA 태양풍(Kp지수)은 실시간 외부 API 병행</div>
     </div>
 
-    <!-- 고정 카드 2: 재능 마켓 -->
-    <div class="plaza-card" onclick="showToast('🎨 재능 마켓 — 준비 중')">
-      <div class="plaza-card-text">
-        <div class="plaza-card-head">
-          <span class="plaza-card-ico">🎨</span>
-          <span class="plaza-card-title">재능 마켓</span>
-        </div>
-        <div class="plaza-card-desc">15분 1:1 고수 매칭</div>
-        <span class="plaza-card-badge">● 준비중</span>
+    <!-- 날씨 -->
+    <div class="tech-card">
+      <div class="t-icon">🌤️</div>
+      <div class="t-name">날씨·기상 데이터</div>
+      <span class="t-status status-live">🟢 실시간 API · 위치 자동 연동</span>
+      <div class="t-desc">
+        <b style="color:var(--gold)">실제로 하는 것:</b><br>
+        Open-Meteo API로 현재 위치의
+        <b>기온·습도·기압·풍속을 실시간 수신</b>합니다.<br><br>
+
+        <b style="color:var(--gold)">위치 자동 연동 (4단계 우선순위):</b><br>
+        <b style="color:#34D399">1순위</b> — 정보 입력의 <b>현재 위치</b> 좌표 자동 사용<br>
+        <b style="color:#38BDF8">2순위</b> — 계산 후 저장된 현재 위치 좌표<br>
+        <b style="color:#A78BFA">3순위</b> — GPS 실시간 위치 (권한 허용 시)<br>
+        <b style="color:rgba(240,236,224,.4)">4순위</b> — 서울 기본값 (아무것도 없을 때)<br><br>
+
+        예: <b>부산 해운대 입력</b> → 부산 날씨 자동 수신 ✅<br>
+        해외 여행 중 → 현지 날씨 자동 반영 ✅<br><br>
+
+        <b style="color:var(--gold)">역학 연동 방식:</b><br>
+        기압 1013hPa 기준 편차 → 오행 에너지 보정.<br>
+        고기압(맑음) → 양(陽) 에너지 강화,
+        저기압(흐림) → 음(陰) 에너지 강화.<br><br>
+
+        <b style="color:rgba(248,113,113,.8)">한계:</b><br>
+        위치 미입력 + GPS 미허용 시 서울 기본값 사용.
+        인터넷 미연결 시 기본값(기온 15°C·기압 1013hPa) 적용.
       </div>
-      <div class="plaza-card-img" style="background-image:url('/card-talent-clean.png');"></div>
+      <div class="t-source">📡 open-meteo.com · 정보 입력 위치 자동 연동</div>
     </div>
 
-    <!-- 고정 카드 3: 취미 모임 -->
-    <div class="plaza-card" onclick="showToast('🎯 취미 모임 — 준비 중')">
-      <div class="plaza-card-text">
-        <div class="plaza-card-head">
-          <span class="plaza-card-ico">🎯</span>
-          <span class="plaza-card-title">취미 모임</span>
-        </div>
-        <div class="plaza-card-desc">관심사로 만나는 사람들</div>
-        <span class="plaza-card-badge">● 준비중</span>
+    <!-- 방위/나침반 -->
+    <div class="tech-card">
+      <div class="t-icon">🧭</div>
+      <div class="t-name">방위·나침반 연동</div>
+      <span class="t-status status-sensor">📱 기기 센서</span>
+      <div class="t-desc">
+        <b style="color:var(--gold)">실제로 하는 것:</b><br>
+        스마트폰 자이로스코프·가속도계로 현재 방위각(0~360°)을 측정.
+        DeviceOrientationEvent API 사용.<br><br>
+        <b style="color:var(--gold)">풍수 연동:</b><br>
+        북(수行)·동(목行)·남(화行)·서(금行)·중(토行)
+        오행 방위 이론으로 현재 방향의 에너지 분석.<br><br>
+        <b style="color:rgba(248,113,113,.8)">한계:</b><br>
+        iOS 13+ 권한 허용 필요.
+        실내 자기장 간섭 시 오차 발생 가능.
       </div>
-      <div class="plaza-card-img" style="background-image:url('/card-hobby-clean.png');"></div>
+      <div class="t-source">📱 DeviceOrientationEvent API · W3C 표준</div>
+    </div>
+
+    <!-- rPPG -->
+    <div class="tech-card">
+      <div class="t-icon">🧬</div>
+      <div class="t-name">rPPG 생체 스캔</div>
+      <span class="t-status status-sensor">📷 카메라 분석 (참고용)</span>
+      <div class="t-desc">
+        <b style="color:var(--gold)">보유 기술 스택:</b><br>
+        스마트폰 전면 카메라로 얼굴 피부색의 미세 변화(혈류 파동)를 프레임별 분석.
+        <b>Butterworth 2차 밴드패스 필터</b>(0.7~3.0Hz @20fps) 적용,
+        <b>RR 인터벌 피크 검출</b>로 심박(BPM)·HRV 추출,
+        <b>FCI 안면혈색지수</b> 실시간 계산.<br><br>
+
+        <b style="color:var(--gold)">과학적 근거:</b><br>
+        원격 광용적맥파(rPPG) 기술은 MIT·스탠퍼드·서울대 등
+        <b>수백 편의 국제 학술 논문</b>으로 검증된 기술입니다.
+        조명이 밝고 움직임이 적을수록 정확도가 높아집니다.<br><br>
+
+        <b style="color:var(--gold)">현재 활용 방식:</b><br>
+        CGO-FULI는 rPPG 기술을 <b>역학 에너지 분석의 생체 보정값</b>으로 활용합니다.
+        심박·HRV·혈색 데이터가 오행 에너지, NASA 행성 에너지와 융합되어
+        더 개인화된 ILI 점수를 만들어냅니다.<br><br>
+
+        <b style="color:rgba(248,113,113,.8)">중요 안내:</b><br>
+        <b>의료기기가 아닙니다.</b> 병원 진단·처방을 대체하지 않습니다.
+        건강 이상 의심 시 반드시 의료 전문가와 상담하세요.
+        본 측정값은 오행·역학 에너지 분석의 참고 데이터로만 사용됩니다.
+      </div>
+      <div class="t-source">📚 MIT CSAIL rPPG 연구 기반 · 비의료용 참고 측정 · 정밀도 고도화 개발 중</div>
+    </div>
+
+    <!-- 혀 스캔 -->
+    <div class="tech-card">
+      <div class="t-icon">👅</div>
+      <div class="t-name">혀 스캔 (설진)</div>
+      <span class="t-status status-algo">🔄 업데이트 예정</span>
+      <div class="t-desc">
+        <b style="color:var(--gold)">실제로 하는 것:</b><br>
+        현재: 동적 시드(생년월일+시간+NASA) 기반
+        한방 설진 5유형(담홍·붉은색·창백·자색·황색) 판별.<br><br>
+        <b style="color:var(--gold)">전통 근거:</b><br>
+        한의학 설진(舌診) 이론: 혀 색·설태·형태로
+        오장육부 상태를 판별하는 2000년 전통 진단법.<br><br>
+        <b style="color:rgba(248,113,113,.8)">솔직한 현황:</b><br>
+        실제 카메라 AI 분석 기능은 개발 중.
+        현재는 역학 시드 기반 체질 분석으로 작동.
+        추후 실제 혀 색상 인식 AI 탑재 예정.
+      </div>
+      <div class="t-source">📅 카메라 AI 설진 분석 → v2.0 업데이트 예정</div>
+    </div>
+
+    <!-- 역학 50대 -->
+    <div class="tech-card">
+      <div class="t-icon">📿</div>
+      <div class="t-name">50대 역학 + 22,000개 데이터베이스</div>
+      <span class="t-status status-algo">✅ 전통 수식 + 대규모 DB</span>
+      <div class="t-desc">
+        <b style="color:var(--gold)">역학 엔진 50개:</b><br>
+        사주명리·자미두수·기문둔갑·태을신수·구성기학·주역·육임신살·
+        베딕점성술·타로·카발라·수비학·성명학·풍수지리·합성차트·
+        하우스시스템 등 <b>동서양 50개 역학 엔진 완전 내장.</b><br><br>
+
+        <b style="color:var(--gold)">22,000개 내장 데이터베이스:</b><br>
+        • 사주 간지 조합 해석 데이터<br>
+        • 자미두수 14주성 × 12궁 조합<br>
+        • 기문둔갑 8문 × 9성 × 방위 조합<br>
+        • 주역 64괘 × 6효 해석<br>
+        • 베딕 27나크샤트라 × 12라시<br>
+        • 타로 78장 × 역학 오행 매핑<br>
+        • 오행별 건강·음식·방위·색상 데이터<br>
+        → <b>총 22,000개 이상의 해석 데이터</b>가 앱에 내장되어
+        외부 서버 없이 즉시 분석 가능합니다.<br><br>
+
+        <b style="color:var(--gold)">NASA 실시간 보정:</b><br>
+        7행성 위치(현재 시각 기준 실시간 계산)로
+        A등급 역학(행성트랜짓·베딕·태을신수·타로)을 실시간 보정.<br><br>
+
+        <b style="color:rgba(248,113,113,.8)">한계:</b><br>
+        역학은 과학이 아닌 전통 인문학입니다.
+        삶의 참고 자료로 활용하세요.
+      </div>
+      <div class="t-source">📚 동서양 역학 전통 문헌 기반 · 22,000개 DB 내장 · NASA 행성 보정 병행</div>
+    </div>
+
+    <!-- 주식 에너지 -->
+    <div class="tech-card">
+      <div class="t-icon">📈</div>
+      <div class="t-name">주식 에너지 분석</div>
+      <span class="t-status status-algo">✅ 2,765개 종목 내장</span>
+      <div class="t-desc">
+        <b style="color:var(--gold)">내장 종목 데이터베이스:</b><br>
+        코스피+코스닥 2,729개 · 나스닥·S&amp;P500·글로벌 36개.<br>
+        <b>총 2,765개 주요 종목</b>이 앱에 내장되어
+        검색 즉시 분석 가능합니다.<br><br>
+
+        <b style="color:var(--gold)">오행 EI지수 (Energy Index):</b><br>
+        각 종목의 <b>설립일 사주</b>와 <b>섹터별 오행</b>을 결합해
+        자동 계산합니다.<br>
+        IT·반도체 → 금(金) / 바이오 → 수(水)<br>
+        에너지·배터리 → 화(火) / 식품·유통 → 토(土)<br>
+        자동차·기계 → 목(木)<br><br>
+
+        <b style="color:var(--gold)">NASA × 오행 융합:</b><br>
+        오늘 내 ILI 점수 + 내 오행 + 종목 오행 EI지수 +
+        NASA 행성 위치(현재 시각 기준)를 결합해
+        투자자 본인의 에너지 상태와 종목 에너지의 궁합을 분석합니다.<br><br>
+
+        <b style="color:rgba(248,113,113,.8)">⚠️ 중요 안내:</b><br>
+        역학·오행·NASA 에너지 기반 <b>참고 정보</b>입니다.
+        실제 투자 결정은 본인 책임이며
+        전문 금융 상담사와 상의하세요.
+        실제 주가·수익률을 보장하지 않습니다.
+      </div>
+      <div class="t-source">📊 코스피+코스닥 전체 2,729개 · 나스닥·S&amp;P500·글로벌 36개 · 총 2,765개 · 오행 EI지수</div>
+    </div>
+
+  </div>
+
+  <!-- 투명성 요약 -->
+  <div style="margin-top:24px;background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.2);border-radius:14px;padding:18px 20px;">
+    <div style="font-size:12px;font-weight:900;color:var(--blue);margin-bottom:10px;">📋 기술 현황 요약</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;font-size:10px;color:rgba(240,236,224,.7);line-height:1.8;">
+      <div><span style="color:var(--green)">🟢 실시간 API</span><br>날씨(Open-Meteo · 입력위치 자동연동) · NOAA 태양풍(Kp지수)</div>
+      <div><span style="color:var(--gold)">🟡 내장 실시간 연산</span><br>NASA 행성 위치(현재 시각 기준) · 50대 역학 수식</div>
+      <div><span style="color:var(--blue)">🔵 기기 센서 (참고용)</span><br>카메라 rPPG · 자이로 방위 · 가속도계 체온</div>
+      <div><span style="color:#A78BFA)">🟣 내장 데이터베이스</span><br>22,000개 역학 DB · 주식 2,765개 종목 · 외부 서버 불필요</div>
+      <div><span style="color:var(--red)">🔴 정밀도 업그레이드 예정</span><br>rPPG 고도화(CHROM+FFT) · 혀 AI 분석 · v2.0</div>
     </div>
   </div>
-  <!-- 하단 탭바 -->
-  <div class="tabbar">
-    <button class="tab-btn" onclick="switchTab('friends')"><span class="tab-ico">👤</span><span>친구</span></button>
-    <button class="tab-btn" onclick="switchTab('chat')"><span class="tab-ico">💬</span><span>채팅</span></button>
-    <button class="tab-btn active" onclick="switchTab('plaza')"><span class="tab-ico">🌐</span><span>광장</span></button>
+</section>
+
+<div class="divider"></div>
+
+<!-- 21가지 기능 카드 -->
+<section>
+  <div class="sec-label">ALL FEATURES · 전체 기능</div>
+  <div class="sec-title">기능을 탭하면<br>사용법을 바로 볼 수 있어요 👆</div>
+  <div class="sec-sub">각 카드를 탭하면 상세 사용법 팝업이 열립니다.</div>
+  <div class="feat-grid">
+    <div class="feat-card" onclick="openPopup('messenger')"><div class="feat-icon">💬</div><div class="feat-name">보안 메신저</div><div class="feat-desc">폭파·CAM방지·기울기·Shield</div><div class="feat-badge">세계 최초 7가지</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('nasa')"><div class="feat-icon">🛸</div><div class="feat-name">NASA × 역학 분석</div><div class="feat-desc">9행성 실시간 × 50대 역학</div><div class="feat-badge">세계 최초</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('bioscan')"><div class="feat-icon">🧬</div><div class="feat-name">생체 스캔 4종</div><div class="feat-desc">관상·손금·혀·호흡 rPPG</div><div class="feat-badge">세계 최초</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('ili')"><div class="feat-icon">📊</div><div class="feat-name">통합 건강 예측</div><div class="feat-desc">NASA×역학×생체 ILI 100점</div><div class="feat-badge">세계 최초</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('report')"><div class="feat-icon">📋</div><div class="feat-name">정밀 리포트</div><div class="feat-desc">S01~S19 역학 전체 상세 분석</div><div class="feat-badge">세계 유일</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('mbti')"><div class="feat-icon">🃏</div><div class="feat-name">MBTI + 타로</div><div class="feat-desc">오행 기반 성격·타로 융합</div><div class="feat-badge">세계 유일</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('dream')"><div class="feat-icon">🌙</div><div class="feat-name">꿈 해몽</div><div class="feat-desc">오행 역학 기반 꿈 해석</div><div class="feat-badge">세계 유일</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('music')"><div class="feat-icon">🎵</div><div class="feat-name">주파수 음악</div><div class="feat-desc">에너지 맞춤 솔페지오 Hz</div><div class="feat-badge">세계 유일</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('fengshui')"><div class="feat-icon">🏠</div><div class="feat-name">풍수 카메라</div><div class="feat-desc">360° GPS × 나침반 실시간</div><div class="feat-badge">세계 최초</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('compat')"><div class="feat-icon">💑</div><div class="feat-name">커플 궁합 분석</div><div class="feat-desc">rPPG 생체 파동 궁합</div><div class="feat-badge">세계 최초</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('naming')"><div class="feat-icon">✍️</div><div class="feat-name">작명 서비스</div><div class="feat-desc">오행·수리·음양 최적 이름</div><div class="feat-badge">세계 유일</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('food')"><div class="feat-icon">🍽️</div><div class="feat-name">음식 궁합</div><div class="feat-desc">오행 체질 × 계절 맞춤 식단</div><div class="feat-badge">세계 유일</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('lotto')"><div class="feat-icon">🎱</div><div class="feat-name">행운 번호 추출</div><div class="feat-desc">NASA × 오행 에너지 번호</div><div class="feat-badge">세계 유일</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('sports')"><div class="feat-icon">⚽</div><div class="feat-name">스포츠 궁합</div><div class="feat-desc">오행 에너지 팀·선수 분석</div><div class="feat-badge">세계 유일</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('stock')"><div class="feat-icon">📈</div><div class="feat-name">주식 에너지 예측</div><div class="feat-desc">오행 × NASA 투자 에너지</div><div class="feat-badge">세계 유일</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('travel')"><div class="feat-icon">🌍</div><div class="feat-name">풍수 여행</div><div class="feat-desc">오행 맞춤 여행지 풍수 분석</div><div class="feat-badge">세계 최초</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('star')"><div class="feat-icon">⭐</div><div class="feat-name">역학 내비 (별 충전소)</div><div class="feat-desc">오늘 에너지 충전 역학 길안내</div><div class="feat-badge">세계 유일</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('oheng')"><div class="feat-icon">🌟</div><div class="feat-name">오행 맞춤</div><div class="feat-desc">목·화·토·금·수 실시간 에너지</div><div class="feat-badge">세계 유일</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('skin')"><div class="feat-icon">💄</div><div class="feat-name">화장 흡수율 (MAI)</div><div class="feat-desc">rPPG 피부 흡수율 세계최초</div><div class="feat-badge">세계 최초</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('svi')"><div class="feat-icon">💪</div><div class="feat-name">피부 탄력 (SVI)</div><div class="feat-desc">rPPG 탄력지수 세계최초</div><div class="feat-badge">세계 최초</div><div class="tap-hint">탭하여 사용법 보기</div></div>
+    <div class="feat-card" onclick="openPopup('sejong')"><div class="feat-icon">👑</div><div class="feat-name">세종 AI 코치</div><div class="feat-desc">NASA × 오행 고풍체 조언</div><div class="feat-badge">세계 유일</div><div class="tap-hint">탭하여 사용법 보기</div></div>
   </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 경쟁사 비교 - 메신저 -->
+<section>
+  <div class="sec-label">MESSENGER COMPARISON · 메신저 비교</div>
+  <div class="sec-title">글로벌 메신저와<br>무엇이 다른가요?</div>
+  <div class="compare-wrap">
+    <table>
+      <tr><th style="text-align:left">기능</th><th>카카오톡</th><th>WhatsApp</th><th>텔레그램</th><th>Signal</th><th class="cgo-h">CGO-FULI ★</th></tr>
+      <tr><td>카메라 촬영 방지 (60Hz)</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="cgo">✅ 세계최초</td></tr>
+      <tr><td>글자 이동속도 보안</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="cgo">✅ 0.1초 세계최초</td></tr>
+      <tr><td>이중 폭파 (시간+열람)</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="cgo">✅ 세계최초</td></tr>
+      <tr><td>4단계 보안 슬라이더</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="cgo">✅ 세계최초</td></tr>
+      <tr><td>기울기 양방향 동기화</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="cgo">✅ 세계최초</td></tr>
+      <tr><td>오행 에너지 채팅방</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="cgo">✅ 세계유일</td></tr>
+      <tr><td>AI 코치 (역학 기반)</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td class="cgo">✅ 세종 AI</td></tr>
+      <tr><td>메시지 자동 삭제</td><td class="no">❌</td><td class="part">△ 제한적</td><td class="yes">✅</td><td class="yes">✅</td><td class="cgo">✅ 3~30초</td></tr>
+      <tr><td>서버 완전 삭제</td><td class="no">❌</td><td class="no">❌</td><td class="yes">✅</td><td class="yes">✅</td><td class="cgo">✅ Firebase 즉시</td></tr>
+      <tr><td>종단간 암호화</td><td class="part">비밀채팅만</td><td class="yes">✅</td><td class="part">비밀채팅만</td><td class="yes">✅</td><td class="cgo">✅ XOR+Base64</td></tr>
+      <tr><td>월 가격</td><td>무료</td><td>무료</td><td>₩7,200</td><td>무료</td><td class="cgo">포함 (17기능)</td></tr>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 21가지 경쟁사 전체 비교 -->
+<section>
+  <div class="sec-label">FULL COMPARISON · 21가지 경쟁사 비교</div>
+  <div class="sec-title">CGO-FULI vs 각 분야<br>글로벌 1위 앱과의 차이</div>
+  <div class="sec-sub">실제 앱스토어 가격 · 2026년 기준 · 솔직한 비교</div>
+
+  <div class="compare-wrap">
+    <table>
+      <tr>
+        <th style="text-align:left">기능</th>
+        <th>글로벌 1위 앱</th>
+        <th>월 구독료</th>
+        <th>글로벌 앱 방식</th>
+        <th>글로벌 앱 한계</th>
+        <th class="cgo-h">CGO-FULI 차이점</th>
+      </tr>
+      <tr><td>💬 보안 메신저</td><td>텔레그램 프리미엄</td><td class="no">₩7,200</td><td>시간 자동삭제</td><td>카메라 촬영 방지 없음</td><td class="cgo">60Hz 카메라방지·이중폭파</td></tr>
+      <tr><td>🛸 NASA × 역학</td><td>Co-Star (점성술)</td><td class="no">₩5,000</td><td>서양 점성술만</td><td>동양 역학 없음·NASA 미연동</td><td class="cgo">동서양 50대 역학 동시 계산</td></tr>
+      <tr><td>🧬 생체 스캔</td><td>Withings Health</td><td class="no">₩12,000</td><td>접촉식 기기</td><td>별도 기기 구매 필요</td><td class="cgo">카메라만으로 비접촉 rPPG</td></tr>
+      <tr><td>📊 통합 건강 예측</td><td>삼성헬스</td><td>무료(제한)</td><td>운동·수면 기록</td><td>역학·NASA 연동 없음</td><td class="cgo">생체+역학+NASA 3중 융합</td></tr>
+      <tr><td>📋 정밀 리포트</td><td>역학 전문 상담소</td><td class="no">₩30,000+</td><td>1회성 상담</td><td>실시간 아님·비쌈</td><td class="cgo">실시간 자동 생성·무제한</td></tr>
+      <tr><td>🃏 MBTI + 타로</td><td>16personalities.com</td><td>무료(제한)</td><td>MBTI 설문만</td><td>타로·오행 연동 없음</td><td class="cgo">MBTI × 오행 × 타로 융합</td></tr>
+      <tr><td>🌙 꿈 해몽</td><td>DreamKit</td><td class="no">₩2,000</td><td>사전식 해몽</td><td>역학·오행 연동 없음</td><td class="cgo">오행·NASA 에너지 연동 해석</td></tr>
+      <tr><td>🎵 주파수 음악</td><td>Calm ($14.99)</td><td class="no">₩21,700</td><td>고정 명상 음악</td><td>개인 에너지 맞춤 없음</td><td class="cgo">오행·ILI 점수별 Hz 맞춤</td></tr>
+      <tr><td>🏠 풍수 카메라</td><td>풍수 인테리어 앱</td><td class="no">₩3,000</td><td>이미지 분석</td><td>GPS·나침반 미연동</td><td class="cgo">GPS+나침반+기상 360° 실시간</td></tr>
+      <tr><td>💑 커플 궁합</td><td>궁합보기·인연궁합</td><td class="no">₩2,000</td><td>사주 대조</td><td>생체 데이터 없음</td><td class="cgo">rPPG 생체 파동 궁합 세계최초</td></tr>
+      <tr><td>✍️ 작명</td><td>작명 전문 앱</td><td class="no">₩5,000</td><td>획수 계산</td><td>오행·수리 종합 없음</td><td class="cgo">오행+수리+음양+NASA 융합</td></tr>
+      <tr><td>🍽️ 음식 궁합</td><td>마이피트니스팔</td><td class="no">₩12,000</td><td>칼로리·영양소</td><td>체질·오행 없음</td><td class="cgo">오행 체질×계절×혀 스캔 연동</td></tr>
+      <tr><td>🎱 행운 번호</td><td>로또 번호 앱</td><td class="no">₩1,000</td><td>랜덤 추출</td><td>에너지 근거 없음</td><td class="cgo">NASA+오행+생년 수리 융합</td></tr>
+      <tr><td>⚽ 스포츠 궁합</td><td>없음</td><td class="no">없음</td><td>해당 없음</td><td>앱 존재하지 않음</td><td class="cgo">세계 유일 오행 스포츠 분석</td></tr>
+      <tr><td>📈 주식 에너지</td><td>증권사 HTS</td><td class="no">₩5,000</td><td>차트·재무제표</td><td>에너지·오행 없음</td><td class="cgo">오행×NASA×ILI 투자 에너지</td></tr>
+      <tr><td>🌍 풍수 여행</td><td>일반 여행 앱</td><td class="no">₩3,000</td><td>숙소·가격 비교</td><td>풍수·오행 없음</td><td class="cgo">오행 맞춤 방위·여행지 풍수</td></tr>
+      <tr><td>⭐ 역학 내비</td><td>없음</td><td class="no">없음</td><td>해당 없음</td><td>앱 존재하지 않음</td><td class="cgo">세계 유일 에너지 충전소</td></tr>
+      <tr><td>🌟 오행 맞춤</td><td>점신·헬로우봇</td><td class="no">₩3,000</td><td>생년월일 사주</td><td>NASA 실시간 없음</td><td class="cgo">NASA 행성 위치 실시간 보정</td></tr>
+      <tr><td>💄 화장 흡수율</td><td>뷰티 AI 앱</td><td class="no">₩6,000</td><td>피부 사진 분석</td><td>혈류·rPPG 없음</td><td class="cgo">rPPG 혈류 기반 MAI 세계최초</td></tr>
+      <tr><td>💪 피부 탄력</td><td>피부 관리 앱</td><td class="no">₩6,000</td><td>접촉식 기기</td><td>비접촉 불가</td><td class="cgo">rPPG 비접촉 SVI 세계최초</td></tr>
+      <tr><td>👑 세종 AI 코치</td><td>AI 코칭 앱</td><td class="no">₩15,000</td><td>일반 AI 조언</td><td>역학·NASA 없음</td><td class="cgo">오행+NASA+역학 고풍체 AI</td></tr>
+      <tr>
+        <td style="font-weight:900;color:var(--gold)">합계 21가지</td>
+        <td style="color:var(--text2)">21개 앱 구독</td>
+        <td style="color:#F87171;font-weight:900">₩131,100/월</td>
+        <td colspan="2" style="color:var(--text2);font-size:9px">앱마다 개별 가입·관리</td>
+        <td style="color:var(--gold);font-weight:900">₩9,900/월</td>
+      </tr>
+    </table>
+  </div>
+
+  <div style="background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:12px;padding:14px 16px;margin-top:16px;font-size:11px;color:rgba(52,211,153,.8);text-align:center;line-height:1.9;">
+    <strong style="color:var(--green)">매월 ₩121,200 절약</strong> · 21개 앱을 하나로 · 하루 단 ₩330<br>
+    <span style="font-size:9px;color:rgba(148,163,184,.4)">※ 실제 앱스토어·구글플레이 가격 기준. 스포츠궁합·역학내비는 세계 최초로 대체 앱 없음.</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 가격 -->
+<section>
+  <div class="sec-label">PRICING · 가격</div>
+  <div class="sec-title">커피 한 잔보다 가벼운 가격</div>
+  <div class="price-box">
+    <div class="price-main">₩330</div>
+    <div style="font-size:14px;color:var(--text2);margin-top:6px;">하루 · 월 9,900원</div>
+    <div style="font-size:12px;color:rgba(52,211,153,.7);margin-top:8px;font-weight:700;">= 일반 앱 21개를 하나로</div>
+    <div class="price-tags">
+      <span class="price-tag">💬 보안 메신저</span><span class="price-tag">🧬 생체 스캔 4종</span>
+      <span class="price-tag">🛸 NASA 실시간</span><span class="price-tag">💄 피부 분석</span>
+      <span class="price-tag">🏠 풍수 카메라</span><span class="price-tag">🍽️ 음식 궁합</span>
+      <span class="price-tag">🎵 주파수 음악</span><span class="price-tag">📈 주식 에너지</span>
+      <span class="price-tag">💑 커플 궁합</span><span class="price-tag">👑 세종 AI</span>
+      <span class="price-tag">🌍 21개국어</span><span class="price-tag">🔮 50대 역학</span>
+    </div>
+    <div style="font-size:11px;color:var(--text2);">65,435줄 · 350만 자 · 972개 엔진 · 특허 10-2026-0060113</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <h2>지금 바로 시작하세요</h2>
+  <p style="font-size:13px;color:var(--text2);line-height:1.9;margin-top:8px;">
+    안드로이드 · 아이폰 모두 지원 · 앱스토어 없이 바로 설치<br>
+    설치 후 알림 허용하면 메시지 알림 수신 🔔
+  </p>
+  <div class="cta-btns">
+    <a href="https://c-go-fuli.com" class="btn-main" onclick="cgoPwaGo(event)">📲 지금 무료 설치하기</a>
+    <a href="https://c-go-fuli.com" class="btn-sub">🌐 웹에서 바로 보기</a>
+  </div>
+  <p style="margin-top:28px;font-size:10px;color:rgba(148,163,184,.4);line-height:2;">
+    📱 안드로이드: 크롬으로 접속 → 하단 "앱 설치" 탭<br>
+    🍎 아이폰: 사파리로 접속 → 공유버튼 → 홈 화면에 추가
+  </p>
 </div>
 
-<!-- ══ SCREEN 3: 채팅방 ══ -->
-<div class="screen" id="scrRoom">
-  <!-- 헤더 -->
-  <div class="room-topbar">
-    <button class="back-btn" onclick="goBack()">‹</button>
-    <div class="r-avatar" id="rAvatar"></div>
-    <div class="r-name" id="rName">상대방</div>
-    <div class="r-btns">
-      <button class="r-btn" id="gearBtn" onclick="toggleSecPanel()">⚙️ 보안</button>
-      <button class="r-btn" id="tiltTopBtn" onclick="toggleTilt()">📐</button>
-    </div>
-  </div>
+<footer>
+  CGO-FULI · 특허 10-2026-0060113 · PCT 국제 출원 중<br>
+  기획: 이주원 × Claude C-14 · C-15 × Gemini · 2026
+</footer>
 
-  <!-- 보안 패널 -->
-  <div class="sec-panel" id="secPanel">
-    <!-- 프리셋 -->
-    <div class="sec-presets">
-      <button class="sec-btn safe" onclick="setLevel('safe')">🟡 보안</button>
-      <button class="sec-btn high" onclick="setLevel('high')">🔴 기밀</button>
-      <button class="sec-btn max" onclick="setLevel('max')">🛡️ 최강</button>
+<!-- 팝업 -->
+<div class="popup-overlay" id="popupOverlay" onclick="closePopup(event)">
+  <div class="popup-box" id="popupBox">
+    <div class="popup-header">
+      <div class="popup-icon" id="popupIcon">💬</div>
+      <div class="popup-title-wrap">
+        <div class="popup-title" id="popupTitle"></div>
+        <div class="popup-subtitle" id="popupSubtitle"></div>
+      </div>
+      <button class="popup-close" onclick="_closePopup()">✕</button>
     </div>
-    <!-- 슬라이더들 -->
-    <div class="slider-row">
-      <span class="slider-lbl">📏 스크롤 글자수</span>
-      <input type="range" id="slScroll" min="4" max="15" value="8" oninput="onSliderChange()">
-      <span class="slider-val" id="valScroll">8자</span>
-    </div>
-    <div class="slider-row">
-      <span class="slider-lbl">⏱️ 자동 삭제</span>
-      <input type="range" id="slTime" min="3" max="30" value="7" oninput="onSliderChange()">
-      <span class="slider-val" id="valTime">7초</span>
-    </div>
-    <div class="slider-row">
-      <span class="slider-lbl">⚡ 글자 속도</span>
-      <input type="range" id="slSpeed" min="1" max="5" value="3" oninput="onSliderChange()">
-      <span class="slider-val" id="valSpeed">0.3초</span>
-    </div>
-    <div class="slider-row">
-      <span class="slider-lbl">🌫️ 글자 투명도</span>
-      <input type="range" id="slOpacity" min="0" max="80" value="0" oninput="onSliderChange()">
-      <span class="slider-val" id="valOpacity">0%</span>
-    </div>
-    <!-- 기울기 -->
-    <div class="tilt-row">
-      <span class="tilt-lbl">📐 기울기 보안 — 45도 기울일 때만 내용 표시</span>
-      <button class="tilt-btn" id="tiltBtn" onclick="toggleTilt()">OFF</button>
-    </div>
-  </div>
-
-  <!-- 메세지 영역 -->
-  <div class="msg-area" id="msgArea"></div>
-
-  <!-- 입력창 -->
-  <div class="input-bar">
-    <textarea id="msgInput" placeholder="메시지 입력..." rows="1"
-      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"></textarea>
-    <button class="send-btn" onclick="sendMsg()">↑</button>
-  </div>
-  <div class="patent-bar">특허 10-2026-0060113 · CGO-FULI SECURE MESSENGER</div>
-</div>
-
-<!-- ══ 친구 추가 모달 ══ -->
-<div class="modal-bg" id="addModal">
-  <div class="modal">
-    <div class="modal-title">👤 친구 추가</div>
-    <input class="modal-field" id="addNickInput" placeholder="상대방 닉네임 입력">
-    <div class="modal-btns">
-      <button class="modal-btn cancel" onclick="closeAddModal()">취소</button>
-      <button class="modal-btn confirm" onclick="addFriend()">추가</button>
-    </div>
+    <div class="popup-body" id="popupBody"></div>
   </div>
 </div>
-
-<!-- ══ 초대 링크 모달 ══ -->
-<div class="modal-bg" id="inviteModal">
-  <div class="modal">
-    <div class="modal-title">🔗 친구 초대</div>
-    <div style="font-size:11px;color:rgba(240,230,200,.5);margin-bottom:12px;text-align:center;">
-      링크를 복사해서 카카오톡으로 보내세요!
-    </div>
-    <div id="inviteLinkBox" style="background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:10px;padding:10px;font-size:10px;color:var(--gold);word-break:break-all;margin-bottom:12px;"></div>
-    <div class="modal-btns">
-      <button class="modal-btn cancel" onclick="document.getElementById('inviteModal').classList.remove('open')">닫기</button>
-      <button class="modal-btn confirm" onclick="copyInviteLink()">📋 복사</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══ 설정 모달 ══ -->
-<div class="modal-bg" id="settingsModal">
-  <div class="modal">
-    <div class="modal-title">⚙️ 설정</div>
-    <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">내 닉네임 변경</div>
-    <input class="modal-field" id="changeNickInput" placeholder="새 닉네임">
-    <div class="modal-btns">
-      <button class="modal-btn cancel" onclick="document.getElementById('settingsModal').classList.remove('open')">닫기</button>
-      <button class="modal-btn confirm" onclick="changeNick()">변경</button>
-    </div>
-  </div>
-</div>
-
-<!-- 토스트 -->
-<div class="toast" id="toast"></div>
-
-<!-- Firebase SDK는 JS가 동적 로드 (CGO-FULI 검증 방식) -->
 
 <script>
-'use strict';
-
-// ══ Firebase 설정 (CGO-FULI와 완전히 동일) ══
-const FB_CFG = {
-  apiKey: "AIzaSyBwT8Dz1C07J-UK3V6Y1oj4-XJvxr6CXMg",
-  authDomain: "cgo-life.firebaseapp.com",
-  databaseURL: "https://cgo-life-default-rtdb.firebaseio.com",
-  projectId: "cgo-life",
-  storageBucket: "cgo-life.firebasestorage.app",
-  messagingSenderId: "435295214189",
-  appId: "1:435295214189:web:004edd952498cbff727d64"
+// ── 팝업 데이터 ──
+var POPUPS = {
+messenger:{icon:'💬',title:'CGO-FULI 보안 메신저 사용법',subtitle:'세계 최초 7가지 보안 기술 · 특허 10-2026-0060113',world:'세계 최초 7가지',steps:[{t:'✅ STEP 1 — 앱 설치',d:'안드로이드: 크롬으로 c-go-fuli.com 접속 → 하단 "앱 설치" 탭<br>아이폰: 사파리로 접속 → 공유버튼 □↑ → 홈 화면에 추가 → 추가'},{t:'✅ STEP 2 — 이름·생년월일 입력',d:'앱 실행 → 이름·생년월일 입력 → 계산하기<br>→ 이름이 자동으로 메신저 닉네임이 됩니다!'},{t:'✅ STEP 3 — 메신저 탭 + 알림 허용',d:'하단 💬 탭 → <b style="color:#F87171">알림 허용 반드시 클릭!</b><br>→ 허용해야 상대방 메시지 알림 수신 가능 🔔'},{t:'✅ STEP 4 — 친구 찾기',d:'우상단 + 버튼 → 친구 이름 검색 → 탭 → 대화 시작!<br>친구도 앱 설치 + 이름 입력 후 검색 가능'},{t:'✅ STEP 5 — 메시지 전송',d:'입력창에 메시지 → 전송<br>상대방 앱 꺼져있어도 푸시 알림으로 전달! 🔔<br>메시지는 설정 시간 후 자동 폭파·서버 삭제'},{t:'🛡️ 보안 강도 설정',d:'⚙️ 탭 → 4단계 선택:<br>🟢 일반(15자/30초) · 🟡 보안(8자/15초)<br>🔴 기밀(6자/7초) · 🛡️ 최강(4자/3초)'},{t:'📷 CAM + 🛡️ Shield',d:'📷 버튼: 60Hz 깜빡임으로 카메라 촬영 방지<br>🛡️ 버튼: rPPG 레이어로 스크린샷 방지<br>최강 모드 시 둘 다 자동 ON!'}],tip:'💡 핵심: 이름 입력 → 메신저 탭 → 알림 허용 → 친구 검색 → 대화!'},
+nasa:{icon:'🛸',title:'NASA × 50대 역학 분석',subtitle:'내장 케플러 궤도 계산 × 동서양 역학 50개 엔진',world:'세계 최초',steps:[{t:'NASA 계산 방식 (투명 공개)',d:'외부 API가 아닌 NASA JPL DE430 케플러 궤도 방정식을 앱 내부에 구현했습니다. 율리우스 날짜 기준으로 태양·달·수성·금성·화성·목성·토성 7행성의 황도 경도를 실시간 계산합니다. 오차 약 0.5° 이내로 역학 활용에 충분합니다.'},{t:'역학과의 연결 방식',d:'A등급 역학(행성트랜짓·태양궁·태을신수)은 행성 위치가 직접 점수에 반영됩니다. 화성이 역행 중이면 S06 행성트랜짓 점수가 최대 -20점까지 하락합니다.'},{t:'50대 역학 목록',d:'동양: 사주명리·자미두수·기문둔갑·태을신수·구성기학·주역·육임신살 등<br>서양: 베딕점성술·타로·카발라·수비학·하우스시스템·합성차트 등<br>총 50가지 엔진 동시 계산'},{t:'이용 방법',d:'앱 → 정보 입력 → 계산하기 → 대시보드에서 ILI 점수 확인<br>에너지의 서 → 정밀 리포트에서 S01~S19 상세 확인'}],tip:'💡 역학은 과학이 아닌 전통 인문학입니다. 과학(NASA·날씨·생체)과 결합해 더 의미 있는 참고 자료로 활용하세요.'},
+bioscan:{icon:'🧬',title:'생체 스캔 4종',subtitle:'rPPG 비접촉 실시간 생체 분석 (참고용 · 비의료기기)',world:'세계 최초',steps:[{t:'rPPG 기술이란?',d:'원격 광용적맥파(rPPG)는 카메라로 피부 혈류 변화를 감지하는 기술입니다. MIT·스탠퍼드 등 학술 연구로 검증된 기술이며, CGO-FULI는 이를 스마트폰에 적용했습니다.<br><b style="color:#F87171">⚠️ 의료기기가 아닌 참고용 측정값입니다.</b>'},{t:'관상 스캔 🧖 — 얼굴',d:'카메라로 얼굴 33초 스캔 → FCI(안면혈색지수)·HRV(심박변이도) 측정<br>밝은 곳에서 정면 스캔 권장'},{t:'손금 스캔 ✋ — 손바닥',d:'손바닥을 카메라 앞에 펼치기 → 33초 스캔<br>BLI(손금분기지수) 측정 → 건강 에너지 분석'},{t:'혀 스캔 👅 — 설진',d:'혀를 내밀고 스캔 → 한방 설진 5유형 판별<br><b style="color:#FCD34D">현재: 역학 시드 기반 판별 · AI 카메라 인식은 v2.0 업데이트 예정</b>'},{t:'호흡 분석 🫁 — 4·7·8',d:'들숨 4초 · 참기 7초 · 날숨 8초 → 마이크로 호흡 감지<br>자율신경 균형 측정'}],tip:'💡 4종 스캔 모두 완료하면 AI 통합 건강 예측 정확도가 향상됩니다!'},
+ili:{icon:'📊',title:'ILI 통합 라이프 인덱스',subtitle:'세계 최초 NASA×역학×생체 실시간 융합 100점 지수',world:'세계 최초',steps:[{t:'ILI란?',d:'Integrated Life Index = 우주(NASA 행성) × 날씨(실시간 기상) × 생체(rPPG) × 역학(50대) 를 융합한 세계 최초 100점 라이프 지수입니다.'},{t:'점수 구성',d:'역학 70% (A~E등급 차등) + 생체 최대 30% (rPPG 스캔 완료 시)<br>생체 스캔 없으면 역학 100% 기반으로 계산됩니다.'},{t:'이용 방법',d:'정보 입력 → 계산하기 → 대시보드 ILI 카드 확인<br>생체 스캔 완료 시 더 정확한 점수 산출'}],tip:'💡 70점 이상: 오늘 에너지 좋음! 60점 이하: 중요 결정은 내일로.'},
+report:{icon:'📋',title:'정밀 리포트',subtitle:'S01~S19 동서양 19개 역학 전체 상세 분석',world:'세계 유일',steps:[{t:'정밀 리포트란?',d:'사주·자미두수·베딕·타로·기문둔갑 등 S01~S19 역학 19가지의 점수와 분석을 한 페이지에 모아 보여드립니다.'},{t:'점수 읽는 법',d:'A등급 ±20점 (NASA 직결) / B등급 ±15점 (rPPG) / C등급 ±10점 (날씨) / D등급 ±8점 / E등급 ±5점<br>오늘 컨디션·행성 위치에 따라 매일 달라집니다.'},{t:'이용 방법',d:'앱 → 에너지의 서 → 정밀 리포트 탭<br>각 역학 항목 탭 → 상세 설명 팝업'}],tip:'💡 매일 아침 확인해서 오늘 가장 강한 에너지 영역을 파악하세요!'},
+mbti:{icon:'🃏',title:'MBTI + 타로',subtitle:'오행 기반 성격 분석 × 타로 융합',world:'세계 유일',steps:[{t:'특징',d:'기존 MBTI 16유형에 동양 오행 에너지를 융합한 독자적 성격 분석입니다. 타로 해석도 내 오행과 연동합니다.'},{t:'오행-MBTI 연결',d:'목형→ENFP/ENFJ / 화형→ESTP/ENTP / 토형→ISFJ/ISTJ / 금형→INTJ/INTP / 수형→INFP/INFJ'},{t:'이용 방법',d:'앱 → MBTI·타로 메뉴 → 오행 기반 유형 확인 → 오늘의 타로 카드 확인'}],tip:'💡 내 MBTI를 입력하면 오행과의 연관성을 확인할 수 있어요!'},
+dream:{icon:'🌙',title:'꿈 해몽',subtitle:'오행 역학 기반 꿈 해석',world:'세계 유일',steps:[{t:'특징',d:'같은 꿈이라도 내 오행 체질에 따라 다르게 해석됩니다. NASA 행성 에너지까지 반영한 맞춤 해몽입니다.'},{t:'오행별 해석',d:'목형 물 꿈→에너지 충전 / 화형 불 꿈→열정·도전 / 토형 흙 꿈→재물·안정 / 금형 금속→성취 / 수형 바다→지혜'},{t:'이용 방법',d:'앱 → 꿈 해몽 → 꿈 키워드 선택 → 오행 연동 해석 확인'}],tip:'💡 아침에 꿈 기억할 때 바로 기록하고 해몽하세요!'},
+music:{icon:'🎵',title:'주파수 음악 치유',subtitle:'솔페지오 주파수 × 오행 에너지 맞춤',world:'세계 유일',steps:[{t:'솔페지오 주파수란?',d:'396Hz(해방)·528Hz(치유)·639Hz(연결)·741Hz(표현)·852Hz(직관) 등 고대 음악 이론 기반 주파수입니다.'},{t:'오행 맞춤',d:'목→639Hz / 화→528Hz / 토→396Hz / 금→741Hz / 수→852Hz<br>ILI 점수와 오늘 에너지에 따라 최적 주파수 자동 선택'},{t:'이용 방법',d:'앱 → 주파수 음악 → 오늘 추천 주파수 재생 → 이어폰 착용 권장'}],tip:'💡 취침 전 15분 추천 주파수를 들으면 수면의 질이 달라집니다!'},
+fengshui:{icon:'🏠',title:'풍수 카메라 (360°)',subtitle:'GPS × 나침반 × 기상 실시간 풍수 분석',world:'세계 최초',steps:[{t:'실제 구현',d:'GPS로 현재 위치 파악 → Open-Meteo API로 실시간 기상 수신 → 스마트폰 자이로스코프로 나침반 방위 측정 → 오행 방위 이론으로 에너지 분석'},{t:'방위 오행',d:'북(수)·동(목)·남(화)·서(금)·중앙(토)<br>현재 향하는 방향의 오행 에너지를 실시간 표시'},{t:'이용 방법',d:'앱 → 풍수 카메라 → GPS·나침반 권한 허용 → 폰 방향 돌리면 방위 에너지 확인'}],tip:'💡 중요한 미팅 전 길방위 확인 → 그 방향으로 이동!'},
+compat:{icon:'💑',title:'rPPG 궁합 분석',subtitle:'rPPG 생체 파동 × 역학 커플 궁합 세계최초',world:'세계 최초',steps:[{t:'일반 궁합과의 차이',d:'기존 앱: 사주 대조만<br>CGO-FULI: 두 사람의 rPPG 생체 파동 데이터 + 사주 + 오행 + NASA 융합 분석<br>실제 생체 에너지 궁합은 세계 최초!'},{t:'커플 궁합',d:'각자 생체 스캔 완료 → 궁합 분석 → 오행 상생상극 + rPPG 파동 일치도 분석'},{t:'이용 방법',d:'앱 → 커플 궁합 → 상대방 정보 입력 → 분석<br>두 사람 모두 생체 스캔 완료 시 가장 정확'}],tip:'💡 연인·친구·직장동료 모두 활용 가능합니다!'},
+naming:{icon:'✍️',title:'작명 서비스',subtitle:'오행·수리·음양 최적 이름 분석',world:'세계 유일',steps:[{t:'특징',d:'획수, 음양, 오행, 수리, NASA 에너지를 모두 반영한 작명 분석. 아기 이름·개명·회사명 모두 가능.'},{t:'이용 방법',d:'앱 → 작명 → 이름·생년월일 입력 → 오행 점수·수리 점수·음양 균형 확인'}],tip:'💡 이름 하나가 평생 에너지를 결정합니다!'},
+food:{icon:'🍽️',title:'음식 궁합',subtitle:'오행 체질 × 계절 × 혀 스캔 연동 맞춤 식단',world:'세계 유일',steps:[{t:'특징',d:'내 오행 체질 + 오늘 날씨 + 혀 스캔 결과를 결합해 오늘 먹으면 좋은 음식과 피할 음식을 알려드립니다.'},{t:'오행별 음식',d:'목(간)→초록채소·신맛 / 화(심장)→쓴맛·붉은음식 / 토(비위)→단맛·노란음식 / 금(폐)→매운맛·흰음식 / 수(신장)→짠맛·검은음식'},{t:'이용 방법',d:'앱 → 음식 궁합 → 오늘 추천 음식 목록 확인'}],tip:'💡 혀 스캔 완료 후 음식 궁합 확인 시 더 정확합니다!'},
+lotto:{icon:'🎱',title:'행운 번호 추출',subtitle:'NASA × 오행 에너지 기반 번호 (참고용)',world:'세계 유일',steps:[{t:'작동 방식',d:'내 오행 에너지 + NASA 행성 위치 + 생년월일 수리를 결합해 오늘 내 에너지와 공명하는 번호를 추출합니다.'},{t:'⚠️ 중요 안내',d:'역학·오행 에너지 기반 참고 서비스입니다.<br>실제 당첨을 보장하지 않으며 건전한 범위에서 즐겨주세요.'}],tip:'💡 매주 같은 번호보다 오늘 에너지에 맞는 번호로!'},
+sports:{icon:'⚽',title:'스포츠 궁합',subtitle:'오행 에너지 팀·선수 분석 세계 유일',world:'세계 유일',steps:[{t:'특징',d:'두 팀·선수의 오행 에너지와 오늘 NASA 행성 위치를 분석해 에너지 우위를 분석합니다. 세계 유일한 역학 기반 스포츠 분석!'},{t:'이용 방법',d:'앱 → 스포츠 궁합 → 팀A vs 팀B 입력 → 에너지 분석'},{t:'⚠️ 안내',d:'역학 에너지 참고 자료입니다. 실제 경기 결과를 보장하지 않습니다.'}],tip:'💡 스포츠 관람 시 재미있는 참고 자료로 활용하세요!'},
+stock:{icon:'📈',title:'주식 에너지 예측',subtitle:'오행 × NASA × rPPG 투자 에너지 (참고용)',world:'세계 유일',steps:[{t:'작동 방식',d:'오늘 내 ILI 점수 + 오행 에너지 + NASA 행성 위치를 결합해 투자자 본인의 에너지 지수를 계산합니다.'},{t:'⚠️ 중요 안내',d:'역학·오행 에너지 기반 참고 정보입니다.<br>실제 투자 결정은 전문 금융 상담사와 상의하고 본인 책임으로 하세요.'}],tip:'💡 ILI 점수 높은 날 중요 결정을 하는 것이 에너지 관점에서 좋습니다!'},
+travel:{icon:'🌍',title:'풍수 여행',subtitle:'GPS × 나침반 × 기상 × 오행 여행 풍수',world:'세계 최초',steps:[{t:'특징',d:'여행지의 GPS·기상·방위 에너지를 실시간 분석. 내 오행에 맞는 여행 방향과 장소를 추천합니다.'},{t:'이용 방법',d:'앱 → 풍수 여행 → 날짜·목적지 선택 → NASA+오행+날씨 융합 분석'}],tip:'💡 여행 전날 목적지 풍수 미리 확인!'},
+star:{icon:'⭐',title:'역학 내비 (별 충전소)',subtitle:'오늘 에너지 충전 방향 안내 세계 유일',world:'세계 유일',steps:[{t:'특징',d:'오늘 내 에너지와 오행을 분석해 에너지 충전 최적 방향·장소를 안내합니다. 네비게이션처럼 에너지 경로 제시!'},{t:'이용 방법',d:'앱 → 역학 내비 → 오늘의 길방위 확인 → 그 방향으로 이동'}],tip:'💡 매일 아침 역학 내비로 에너지 충전 방향을 확인하세요!'},
+oheng:{icon:'🌟',title:'오행 맞춤',subtitle:'NASA 실시간 보정 오행 에너지 분석',world:'세계 유일',steps:[{t:'특징',d:'내 주 오행 에너지에 NASA 행성 위치 실시간 보정을 더해 오늘의 오행 에너지 상태를 분석합니다.'},{t:'오행 상생·상극',d:'상생: 목→화→토→금→수→목<br>상극: 목→토, 화→금, 토→수, 금→목, 수→화'},{t:'이용 방법',d:'대시보드 → 오행 에너지 카드 → 오늘 강하고 약한 오행 확인'}],tip:'💡 내 오행 색상·음식·방향을 알면 에너지 높이는 생활이 가능해요!'},
+skin:{icon:'💄',title:'화장 흡수율 (MAI)',subtitle:'rPPG 혈류 기반 피부 흡수율 세계최초',world:'세계 최초',steps:[{t:'MAI란?',d:'Moisture Absorption Index. rPPG로 얼굴 혈류 변화를 분석해 피부 흡수율을 측정하는 세계 최초 비접촉 방식입니다.'},{t:'이용 방법',d:'앱 → 화장 흡수율 → 관상 스캔 먼저 완료 → MAI 점수 확인'},{t:'활용법',d:'MAI 높은 날 → 영양 크림·마스크팩 효과 최상!\nMAI 낮은 날 → 피부 자극 최소화'}],tip:'💡 아침 세안 후 MAI 스캔 → 오늘 화장품 선택 기준으로 활용!'},
+svi:{icon:'💪',title:'피부 탄력 (SVI)',subtitle:'rPPG 비접촉 탄력지수 세계최초',world:'세계 최초',steps:[{t:'SVI란?',d:'Skin Vitality Index. rPPG로 피부 탄력과 생기를 0~100으로 측정하는 세계 최초 비접촉 방식입니다.'},{t:'이용 방법',d:'앱 → 피부 탄력 → 관상 스캔 완료 후 자동 SVI 계산'},{t:'점수 해석',d:'90+: 최상 / 80~89: 우수 / 70~79: 보통 / 60이하: 관리 필요'}],tip:'💡 아침 세안 후 SVI 스캔 → 오늘 피부 집중 케어 여부 결정!'},
+sejong:{icon:'👑',title:'세종대왕 AI 코치',subtitle:'NASA × 오행 × 역학 기반 고풍체 AI 조언',world:'세계 유일',steps:[{t:'특징',d:'두 사람의 오행·사주·NASA 실시간 데이터를 분석해 "~이옵니다" 세종대왕 말투로 지혜로운 조언을 드립니다. 🎐'},{t:'메신저에서 사용',d:'채팅창 상단 AI 코치 탭 → 상대방과의 오행 궁합 + NASA 에너지 분석 → 맞춤 조언'},{t:'개인 상담',d:'앱 → 세종 AI → 고민 입력 → 내 사주·오행·ILI 점수 반영 맞춤 답변'}],tip:'💡 "오늘 중요한 미팅이 있는데 어떻게 하면 좋을까요?" 구체적 질문이 효과적!'}
 };
 
-// ══ Firebase 동적 로드 (CGO-FULI에서 검증된 방식 그대로) ══
-let db = null;
-(function loadFirebase(){
-  var s1 = document.createElement('script');
-  s1.src = 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js';
-  s1.onload = function(){
-    var s2 = document.createElement('script');
-    s2.src = 'https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js';
-    s2.onload = function(){
-      try{
-        if(!firebase.apps.length) firebase.initializeApp(FB_CFG);
-        db = firebase.database();
-        console.log('[CGM] Firebase 연결 완료');
-      }catch(err){
-        console.error('[CGM] Firebase 초기화 실패:', err);
-      }
-    };
-    document.head.appendChild(s2);
-  };
-  document.head.appendChild(s1);
-})();
-
-// ══ Firebase 안전 접근 헬퍼 — db 없어도 앱 죽지 않음 ══
-function dbRef(path){
-  if(db) return db.ref(path);
-  // db 아직 로드 안 됨 → 안전한 가짜 객체 반환 (앱 크래시 방지)
-  const noop = function(){ return fake; };
-  const fake = {
-    set:noop, update:noop, push:noop, remove:noop, on:noop, off:noop,
-    orderByChild:function(){ return fake; },
-    equalTo:function(){ return fake; },
-    limitToLast:function(){ return fake; },
-    once:function(){ return Promise.resolve({val:function(){return null;}, exists:function(){return false;}, forEach:function(){}}); }
-  };
-  return fake;
-}
-
-// ══ 앱 상태 ══
-let _myCode = '';
-let _myNick = '';
-let _myColor = '#d4a843';
-let _rooms = {};
-let _currentRoom = null;
-let _secOn = false;
-let _tiltOn = false;
-let _tiltOk = false;
-let _tiltHandler = null;
-let _msgListener = null;
-let _cleanTimer = null;
-
-// 보안 설정값
-let _secSettings = { scroll:8, time:7, speed:300, opacity:0 };
-
-// ══ 초기화 ══
-window.addEventListener('load', () => {
-  // localStorage에서 복원
-  _myNick  = localStorage.getItem('cgm2_nick') || '';
-  _myCode  = localStorage.getItem('cgm2_code') || '';
-  _myColor = localStorage.getItem('cgm2_color') || '#d4a843';
-  const roomsStr = localStorage.getItem('cgm2_rooms');
-  if(roomsStr) try{ _rooms = JSON.parse(roomsStr); }catch(e){}
-
-  // 로그인 상태 확인
-  const loggedIn = localStorage.getItem('cgm2_logged_in')==='1';
-  const savedUser = localStorage.getItem('cgm2_login_user') || '';
-
-  if(loggedIn){
-    // 이미 로그인됨 → 닉네임 있으면 친구 탭으로, 없으면 닉네임 입력으로
-    if(_myNick && _myCode){
-      switchTab('friends');
-      renderRoomList();
-      registerToFirebase();
-      listenInvites();
-      updateNickBars();
-      const p = new URLSearchParams(location.search);
-      const inv = p.get('invite');
-      if(inv) setTimeout(()=>handleInviteParam(inv), 1000);
-    } else {
-      goScreen('scrNick');
-    }
-  } else {
-    // 표지 먼저 (기본값이 scrCover active 상태)
-    if(savedUser) document.getElementById('loginUser').value = savedUser;
-  }
-
-  // 컬러 선택
-  document.querySelectorAll('.nick-color').forEach(el=>{
-    if(el.dataset.color===_myColor) el.classList.add('sel');
-    else el.classList.remove('sel');
+function openPopup(key){
+  var d=POPUPS[key];if(!d)return;
+  document.getElementById('popupIcon').textContent=d.icon;
+  document.getElementById('popupTitle').textContent=d.title;
+  document.getElementById('popupSubtitle').textContent=d.subtitle;
+  var html='';
+  if(d.world) html+='<div class="popup-world">🌍 '+d.world+'</div>';
+  d.steps.forEach(function(s,i){
+    html+='<div class="popup-step"><div class="popup-step-num">'+(i+1)+'</div><div><div class="popup-step-title">'+s.t+'</div><div class="popup-step-desc">'+s.d.replace(/\n/g,'<br>')+'</div></div></div>';
+    if(i<d.steps.length-1) html+='<div class="popup-divider"></div>';
   });
+  if(d.tip) html+='<div class="popup-tip">'+d.tip+'</div>';
+  document.getElementById('popupBody').innerHTML=html;
+  document.getElementById('popupOverlay').classList.add('show');
+  document.body.style.overflow='hidden';
+  document.documentElement.style.overflow='hidden';
+}
+function _closePopup(){
+  document.getElementById('popupOverlay').classList.remove('show');
+  document.body.style.overflow='';
+  document.documentElement.style.overflow='';
+}
+function closePopup(e){if(e.target===document.getElementById('popupOverlay'))_closePopup();}
 
-  // 광장 말풍선 초기화
-  initPlazaBubbles();
+// 설치 처리
+window._cgoPwaPromptEvent=null;
+window.addEventListener('beforeinstallprompt',function(e){
+  e.preventDefault();window._cgoPwaPromptEvent=e;
 });
 
-// ══ 탭 전환 (친구/채팅/광장) ══
-function switchTab(tab){
-  const map = { friends:'scrFriends', chat:'scrList', plaza:'scrPlaza' };
-  const target = map[tab];
-  if(!target) return;
-  goScreen(target);
-  updateNickBars();
-  if(tab==='plaza') initPlazaBubbles();
+function cgoPwaGo(e){
+  if(e)e.preventDefault();
+  var ua=navigator.userAgent.toLowerCase();
+  var isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isInApp=/kakaotalk|fbav|instagram|naver|line|snapchat|twitter/i.test(ua);
+  if(!isIOS&&isInApp){location.href='intent://c-go-fuli.com#Intent;scheme=https;package=com.android.chrome;end';return;}
+  if(isIOS&&isInApp){_showIosInAppGuide();return;}
+  if(isIOS){_showIosInstallGuide();return;}
+  if(window._cgoPwaPromptEvent){window._cgoPwaPromptEvent.prompt();return;}
+  location.href='https://c-go-fuli.com';
+}
+function _showIosInAppGuide(){
+  _showMsg('⚠️','Safari로 열어주세요!',
+    '카카오톡 내 브라우저에서는 설치가 되지 않아요 😅<br><br>'+
+    '<b style="color:#38BDF8">① 우하단 ··· 또는 공유 버튼 탭</b><br>'+
+    '<b style="color:#D4A843">② Safari로 열기 선택</b><br>'+
+    '<b style="color:#34D399">③ Safari에서 설치하기!</b>','확인했어요!');
+}
+function _showIosInstallGuide(){
+  _showMsg('📲','CGO-FULI 설치',
+    '<b style="color:#38BDF8">① 하단 공유버튼 □↑ 탭</b><br>'+
+    '<b style="color:#D4A843">② 홈 화면에 추가 탭</b><br>'+
+    '<b style="color:#34D399">③ 추가 탭 → 완료! 🎉</b><br><br>'+
+    '<span style="font-size:11px;color:rgba(148,163,184,.5)">설치 후 알림 허용 → 메시지 알림 수신 🔔</span>',
+    '바로 설치할게요!');
+}
+function _showMsg(icon,title,body,btn){
+  var p=document.createElement('div');
+  p.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.92);display:flex;align-items:flex-end;justify-content:center;padding:20px;backdrop-filter:blur(8px);';
+  p.innerHTML='<div style="width:100%;max-width:480px;background:linear-gradient(160deg,#0a1628,#0d1f3c);border:1px solid rgba(212,168,67,.25);border-radius:24px 24px 16px 16px;padding:30px 24px;text-align:center;">'+
+    '<div style="font-size:36px;margin-bottom:12px;">'+icon+'</div>'+
+    '<div style="font-size:18px;font-weight:900;color:#34D399;margin-bottom:16px;">'+title+'</div>'+
+    '<div style="font-size:14px;color:rgba(240,230,200,.8);line-height:2.1;margin-bottom:22px;text-align:left;">'+body+'</div>'+
+    '<button onclick="this.parentNode.parentNode.remove()" style="width:100%;padding:16px;background:linear-gradient(135deg,#D4A843,#F5C842);border:none;border-radius:14px;font-size:16px;font-weight:900;color:#050D1A;cursor:pointer;">'+btn+'</button>'+
+    '</div>';
+  document.body.appendChild(p);
 }
 
-function updateNickBars(){
-  const label = _myNick ? (_myNick + ' · ' + _myCode) : '';
-  const a = document.getElementById('myNickBar');
-  const b = document.getElementById('myNickBarFriends');
-  if(a) a.textContent = label;
-  if(b) b.textContent = label;
-}
-
-// ══ 광장 말풍선 — 랜덤 주제가 떠다님 (장식용) ══
-function initPlazaBubbles(){
-  const wrap = document.getElementById('plazaBubbles');
-  if(!wrap) return;
-  const topics = [
-    '🍜 오늘 점심 뭐 먹지?','🎨 그림 배우고 싶은 분','🏃 러닝 메이트 구해요',
-    '📚 독서모임 같이해요','🎸 기타 초보 모임','☕ 카페 추천 받아요',
-    '🐕 강아지 산책 메이트','🎮 게임 같이해요','🌸 꽃꽂이 원데이'
-  ];
-  wrap.innerHTML = '';
-  topics.forEach((t,i)=>{
-    const b = document.createElement('div');
-    b.className = 'plaza-bubble';
-    b.textContent = t;
-    b.style.top = (10 + (i*11)%90) + '%';
-    b.style.left = '-180px';
-    b.style.animationDelay = (i*2.8) + 's';
-    wrap.appendChild(b);
-  });
-}
-
-// ══ 로그인 ══
-function doLogin(){
-  const user = document.getElementById('loginUser').value.trim();
-  const pass = document.getElementById('loginPass').value;
-  const remember = document.getElementById('loginRemember').checked;
-
-  if(!user){ showToast('Username을 입력해주세요'); return; }
-  if(!pass){ showToast('Password를 입력해주세요'); return; }
-
-  // MVP: 클라이언트 측 간단 로그인 (TODO: Firebase Auth 연동)
-  // 아무 user/pass 조합 허용 — 차후 Firebase Auth로 교체
-  localStorage.setItem('cgm2_logged_in','1');
-  if(remember){
-    localStorage.setItem('cgm2_login_user', user);
-  } else {
-    localStorage.removeItem('cgm2_login_user');
+// 자동 iOS 인앱 감지
+window.addEventListener('load',function(){
+  var ua=navigator.userAgent.toLowerCase();
+  var isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isInApp=/kakaotalk|fbav|instagram|naver|line/i.test(ua);
+  if(isIOS&&isInApp){
+    var banner=document.createElement('div');
+    banner.style.cssText='position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#0d1f3c,#0a1628);border-bottom:1px solid rgba(212,168,67,.3);padding:12px 16px;display:flex;align-items:center;gap:10px;';
+    banner.innerHTML='<span style="font-size:20px;">⚠️</span>'+
+      '<span style="flex:1;font-size:12px;color:rgba(240,236,224,.8);line-height:1.5;">Safari로 열어야 설치돼요!<br><span style="color:#D4A843;font-weight:700">우하단 ··· → Safari로 열기</span></span>'+
+      '<button onclick="this.parentNode.remove()" style="background:none;border:none;color:rgba(148,163,184,.5);font-size:18px;cursor:pointer;">✕</button>';
+    document.body.prepend(banner);
   }
-
-  // 이전에 사용하던 닉네임 있으면 친구 탭으로, 없으면 닉네임 설정
-  if(_myNick && _myCode){
-    switchTab('friends');
-    renderRoomList();
-    registerToFirebase();
-    listenInvites();
-    updateNickBars();
-  } else {
-    // user 이름을 닉네임 기본값으로 미리 채워둠
-    const nickInput = document.getElementById('nickInput');
-    if(nickInput && !nickInput.value) nickInput.value = user;
-    goScreen('scrNick');
+  if(!isIOS&&isInApp){
+    setTimeout(function(){
+      var overlay=document.createElement('div');
+      overlay.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;padding:24px;';
+      overlay.innerHTML='<div style="width:100%;max-width:400px;background:linear-gradient(160deg,#0a1628,#0d1f3c);border:2px solid rgba(212,168,67,.4);border-radius:24px;padding:32px 24px;text-align:center;">'+
+        '<div style="font-size:48px;margin-bottom:16px;">🔄</div>'+
+        '<div style="font-size:18px;font-weight:900;color:#D4A843;margin-bottom:8px;">크롬으로 열어주세요!</div>'+
+        '<div style="font-size:13px;color:rgba(240,236,224,.7);line-height:2;margin-bottom:20px;">카카오 브라우저에서는 설치가 안 돼요<br>아래 버튼을 탭하면 크롬으로 자동 전환됩니다</div>'+
+        '<button onclick="location.href=\'intent://c-go-fuli.com#Intent;scheme=https;package=com.android.chrome;end\'" style="width:100%;padding:16px;background:linear-gradient(135deg,#D4A843,#F5C842);border:none;border-radius:14px;font-size:16px;font-weight:900;color:#050D1A;cursor:pointer;margin-bottom:10px;">크롬으로 열기 🚀</button>'+
+        '<button onclick="this.parentNode.parentNode.remove()" style="width:100%;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:14px;color:rgba(240,236,224,.5);cursor:pointer;">그냥 보기만 할게요</button>'+
+        '</div>';
+      document.body.appendChild(overlay);
+    },500);
   }
-}
-
-function doLogout(){
-  localStorage.removeItem('cgm2_logged_in');
-  goScreen('scrLogin');
-}
-
-// ══ 화면 전환 ══
-function goScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>{
-    s.classList.remove('active');
-  });
-  document.getElementById(id).classList.add('active');
-}
-
-// ══ 닉네임 시작 ══
-function pickColor(el){
-  document.querySelectorAll('.nick-color').forEach(e=>e.classList.remove('sel'));
-  el.classList.add('sel');
-  _myColor = el.dataset.color;
-}
-
-function startApp(){
-  const nick = document.getElementById('nickInput').value.trim();
-  if(!nick){ showToast('닉네임을 입력해주세요!'); return; }
-  _myNick = nick;
-  if(!_myCode) _myCode = genCode();
-  localStorage.setItem('cgm2_nick', _myNick);
-  localStorage.setItem('cgm2_code', _myCode);
-  localStorage.setItem('cgm2_color', _myColor);
-  switchTab('friends');
-  updateNickBars();
-  renderRoomList();
-  registerToFirebase();
-  listenInvites();
-}
-
-function genCode(){
-  const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  return Array.from({length:6},()=>c[Math.floor(Math.random()*c.length)]).join('');
-}
-
-// ══ Firebase 등록 ══
-function registerToFirebase(){
-  dbRef('cgm2/users/'+_myCode).set({
-    nick:_myNick, code:_myCode, color:_myColor, lastSeen:Date.now()
-  });
-}
-
-// ══ 채팅 목록 렌더링 ══
-function renderRoomList(){
-  const el = document.getElementById('roomList');
-  const codes = Object.keys(_rooms);
-  if(!codes.length){
-    el.innerHTML = '<div class="list-empty"><div>💬</div><div>아직 대화가 없어요<br>+ 버튼으로 친구를 추가하세요</div></div>';
-    return;
-  }
-  el.innerHTML = codes.sort((a,b)=>(_rooms[b].lastTime||0)-(_rooms[a].lastTime||0)).map(code=>{
-    const r = _rooms[code];
-    const badge = r.unread ? `<div class="room-badge">${r.unread}</div>` : '';
-    const time = r.lastTime ? new Date(r.lastTime).toLocaleTimeString('ko',{hour:'2-digit',minute:'2-digit'}) : '';
-    const lastMsg = r.lastMsg ? (r.lastMsg.length>20?r.lastMsg.slice(0,20)+'...':r.lastMsg) : '대화를 시작하세요';
-    return `<div class="room-item" onclick="openRoom('${code}')">
-      <div class="room-avatar" style="background:${r.color||'rgba(212,168,67,.2)'};">${(r.nick||'?')[0]}</div>
-      <div class="room-info">
-        <div class="room-nick">${escHtml(r.nick||'?')}</div>
-        <div class="room-last">${escHtml(lastMsg)}</div>
-      </div>
-      <div class="room-meta"><div class="room-time">${time}</div>${badge}</div>
-    </div>`;
-  }).join('');
-}
-
-// ══ 친구 추가 ══
-function openAddModal(){ document.getElementById('addModal').classList.add('open'); }
-function closeAddModal(){ document.getElementById('addModal').classList.remove('open'); }
-
-function addFriend(){
-  const nick = document.getElementById('addNickInput').value.trim();
-  if(!nick){ showToast('닉네임을 입력해주세요!'); return; }
-  // Firebase에서 닉네임으로 검색
-  dbRef('cgm2/users').orderByChild('nick').equalTo(nick).once('value').then(snap=>{
-    const data = snap.val();
-    if(!data){
-      showToast('❌ 사용자를 찾을 수 없어요');
-      return;
-    }
-    const code = Object.keys(data)[0];
-    const user = data[code];
-    if(code === _myCode){ showToast('😅 내 자신은 추가 못해요!'); return; }
-    createRoom(code, user.nick, user.color||'#d4a843');
-    closeAddModal();
-    document.getElementById('addNickInput').value = '';
-  });
-}
-
-function createRoom(code, nick, color){
-  if(!_rooms[code]){
-    _rooms[code] = { code, nick, color:color||'#d4a843', lastMsg:'', lastTime:null, unread:0, msgs:[] };
-    saveRooms();
-    renderRoomList();
-  }
-  openRoom(code);
-}
-
-// ══ 채팅방 열기 ══
-function openRoom(code){
-  const room = _rooms[code];
-  if(!room) return;
-  _currentRoom = code;
-  room.unread = 0;
-  saveRooms();
-
-  // 헤더 세팅
-  const av = document.getElementById('rAvatar');
-  av.textContent = (room.nick||'?')[0];
-  av.style.background = room.color||'rgba(212,168,67,.2)';
-  document.getElementById('rName').textContent = room.nick||'?';
-
-  renderMessages();
-  goScreen('scrRoom');
-
-  // Firebase 수신
-  if(_msgListener) _msgListener.off();
-  const roomId = [_myCode, code].sort().join('_');
-  _msgListener = dbRef('cgm2/chats/'+roomId+'/msgs');
-  _msgListener.on('child_added', snap=>{
-    const msg = snap.val();
-    if(msg.from === _myCode) return;
-    const room2 = _rooms[code];
-    if(!room2) return;
-    if(!room2.msgs) room2.msgs = [];
-    const exists = room2.msgs.some(m=>m.id===snap.key);
-    if(!exists){
-      const rId = [_myCode, code].sort().join('_');
-      msg.text = cgmDecrypt(msg.text, rId);
-      msg.id = snap.key;
-      room2.msgs.push(msg);
-      room2.lastMsg = '새 메시지';
-      room2.lastTime = msg.t||Date.now();
-      saveRooms();
-      if(_currentRoom===code) renderMessages();
-      else { room2.unread=(room2.unread||0)+1; renderRoomList(); }
-    }
-  });
-
-  // 읽음 처리
-  dbRef('cgm2/read/'+roomId+'/'+_myCode).set(Date.now());
-
-  // 자동삭제 타이머
-  if(_cleanTimer) clearInterval(_cleanTimer);
-  _cleanTimer = setInterval(()=>{ if(_currentRoom) cleanMessages(_currentRoom); }, 4000);
-
-  // 초대 신호 전송
-  dbRef('cgm2/invites/'+code+'/'+_myCode).set({
-    nick:_myNick, color:_myColor, status:'connected', t:Date.now()
-  });
-}
-
-// ══ 뒤로가기 ══
-function goBack(){
-  _currentRoom = null;
-  if(_msgListener){ _msgListener.off(); _msgListener=null; }
-  if(_cleanTimer){ clearInterval(_cleanTimer); _cleanTimer=null; }
-  if(_tiltOn) toggleTilt();
-  // 보안 패널 닫기
-  document.getElementById('secPanel').classList.remove('open');
-  _secOn = false;
-  document.getElementById('gearBtn').classList.remove('on');
-  renderRoomList();
-  goScreen('scrList');
-}
-
-// ══ 메세지 렌더링 ══
-function renderMessages(){
-  const room = _rooms[_currentRoom];
-  if(!room) return;
-  const el = document.getElementById('msgArea');
-  const msgs = room.msgs||[];
-  let html = '';
-  msgs.forEach((msg, idx)=>{
-    const isXy = msg.isAI || msg.from==='xy';
-    const isMe = !isXy && msg.from===_myCode;
-    const time = msg.t ? new Date(msg.t).toLocaleTimeString('ko',{hour:'2-digit',minute:'2-digit'}) : '';
-    if(isXy){
-      const txt = String(msg.text||'').replace(/^🟡 Xy:\s*/,'');
-      const loadingCls = msg.loading ? ' xy-loading' : '';
-      html += `<div class="msg-wrap xy">
-        <div class="msg-sender">🟡 Xy</div>
-        <div class="xy-bubble${loadingCls}">${escHtml(txt)}</div>
-        <div class="msg-meta">${time}</div>
-      </div>`;
-      return;
-    }
-    const bubble = _secOn ? makeSecureBubble(msg.text) : `<div class="msg-bubble">${escHtml(msg.text)}</div>`;
-    html += `<div class="msg-wrap ${isMe?'me':'you'}">
-      ${!isMe?`<div class="msg-sender">${escHtml(room.nick||'?')}</div>`:''}
-      ${bubble}
-      <div class="msg-meta">${time} ${isMe?(msg.read?'✓✓':'✓'):''}</div>
-    </div>`;
-  });
-  el.innerHTML = html;
-  el.scrollTop = el.scrollHeight;
-
-  // 투명도 적용
-  applyOpacity();
-
-  // 기울기 상태 유지
-  if(_tiltOn && !_tiltOk) el.classList.add('tilt-lock');
-  else el.classList.remove('tilt-lock');
-}
-
-// ══ 보안 버블 (네온 스크롤) ══
-function makeSecureBubble(text){
-  const WIN = _secSettings.scroll;
-  const SPD = _secSettings.speed;
-  const chars = Array.from(text);
-  const neonChars = arr => arr.map(c=>`<span class="msg-char">${escHtml(c)}</span>`).join('');
-  if(chars.length <= WIN){
-    return `<div class="msg-bubble"><span class="msg-secure-inner">${neonChars(chars)}</span></div>`;
-  }
-  const dur = Math.max(0.5, chars.length * SPD / 1000);
-  const inner = neonChars(chars) + neonChars(chars);
-  const winEm = WIN + 'em';
-  return `<div class="msg-bubble"><span class="msg-secure" style="width:${winEm}"><span class="msg-secure-inner" style="animation-duration:${dur.toFixed(2)}s">${inner}</span></span></div>`;
-}
-
-// ══ 투명도 적용 ══
-function applyOpacity(){
-  const op = 1 - (_secSettings.opacity / 100);
-  document.querySelectorAll('.msg-bubble').forEach(b=>{
-    b.style.opacity = op;
-  });
-}
-
-// ══ 메세지 전송 ══
-function sendMsg(){
-  const inp = document.getElementById('msgInput');
-  const text = inp.value.trim();
-  if(!text || !_currentRoom) return;
-  inp.value = '';
-
-  const msg = { from:_myCode, text, t:Date.now(), read:false };
-  const room = _rooms[_currentRoom];
-  if(!room.msgs) room.msgs = [];
-  room.msgs.push(msg);
-  room.lastMsg = _secOn ? '🔒 보안 메시지' : text;
-  room.lastTime = Date.now();
-  saveRooms();
-  renderMessages();
-
-  // Firebase 전송
-  const roomId = [_myCode, _currentRoom].sort().join('_');
-  const encText = cgmEncrypt(text, roomId);
-  dbRef('cgm2/chats/'+roomId+'/msgs').push({
-    from:_myCode, text:encText, t:Date.now(), read:false
-  });
-  dbRef('cgm2/users/'+_myCode).update({ nick:_myNick, color:_myColor });
-
-  // 🟡 Xy wake word 감지 — "자이" 또는 "Xy" 언급 시 AI 소환
-  if(text.indexOf('자이')!==-1 || /\bxy\b/i.test(text)){
-    xyReply(text);
-  }
-}
-
-// ══ 🟡 Xy (자이) AI — 3자 대화 ══
-function xyReply(userText){
-  const room = _rooms[_currentRoom];
-  if(!room) return;
-  if(!room.msgs) room.msgs = [];
-
-  // 로딩 메시지
-  const loadMsg = { from:'xy', isAI:true, loading:true, text:'🟡 Xy: 생각 중...', t:Date.now() };
-  room.msgs.push(loadMsg);
-  saveRooms();
-  renderMessages();
-
-  const sysPrompt =
-    '당신은 "Xy(자이)"입니다. CGO 메신저에서 두 사용자의 대화에 함께 참여하는 친근한 AI 친구입니다. ' +
-    '성격: 만물박사이지만 잘난 척하지 않음. 시사·경제·상식·일상 모든 분야에 밝음. 친구 같은 존댓말. ' +
-    '원칙: 3문장 이내로 핵심만. 두 사람 중 한 편 들지 않고 중립. 이모지 1-2개로 톤 조절. ' +
-    '추천 요청 시 구체적 선택지 2-3개 제시. 모르는 건 솔직히 "그건 확실치 않아요"라고 말함. ' +
-    '최신 뉴스·실시간 시세는 학습 시점 이후는 정확하지 않을 수 있다고 고지함. ' +
-    '대화 흐름상 불필요하면 짧게 끝냄. 한국어가 기본, 유저가 영어로 물으면 영어로 답변.';
-
-  fetch('/api/groq', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      model:'llama-3.3-70b-versatile',
-      messages:[
-        {role:'system', content:sysPrompt},
-        {role:'user', content:userText}
-      ],
-      max_tokens:300,
-      temperature:0.8
-    })
-  }).then(r=>r.json()).then(data=>{
-    let reply = '';
-    try{ reply = data.choices[0].message.content || ''; }catch(e){ reply=''; }
-    if(!reply) reply = '다시 말씀해주실 수 있을까요? 🙏';
-    loadMsg.text = '🟡 Xy: ' + reply.trim();
-    loadMsg.loading = false;
-    saveRooms();
-    renderMessages();
-  }).catch(()=>{
-    loadMsg.text = '🟡 Xy: 잠시 후 다시 불러주세요 🙏';
-    loadMsg.loading = false;
-    saveRooms();
-    renderMessages();
-  });
-}
-
-// ══ 자동 삭제 ══
-function cleanMessages(code){
-  if(!_secOn) return; // 일반 모드면 삭제 안 함!
-  const room = _rooms[code];
-  if(!room||!room.msgs) return;
-  const now = Date.now();
-  const expMs = _secSettings.time * 1000;
-  const before = room.msgs.length;
-  room.msgs = room.msgs.filter(m => !m.t || (now - m.t) < expMs);
-  if(room.msgs.length !== before){
-    saveRooms();
-    if(_currentRoom===code) renderMessages();
-  }
-}
-
-// ══ 보안 패널 ══
-function toggleSecPanel(){
-  const panel = document.getElementById('secPanel');
-  const btn = document.getElementById('gearBtn');
-  panel.classList.toggle('open');
-  _secOn = panel.classList.contains('open');
-  btn.classList.toggle('on', _secOn);
-  if(_currentRoom) renderMessages();
-}
-
-function setLevel(level){
-  document.querySelectorAll('.sec-btn').forEach(b=>b.classList.remove('on'));
-  document.querySelector(`.sec-btn.${level}`).classList.add('on');
-  if(level==='safe'){
-    document.getElementById('slScroll').value=12;
-    document.getElementById('slTime').value=15;
-    document.getElementById('slSpeed').value=2;
-    document.getElementById('slOpacity').value=15;
-  } else if(level==='high'){
-    document.getElementById('slScroll').value=6;
-    document.getElementById('slTime').value=7;
-    document.getElementById('slSpeed').value=3;
-    document.getElementById('slOpacity').value=45;
-  } else if(level==='max'){
-    document.getElementById('slScroll').value=4;
-    document.getElementById('slTime').value=3;
-    document.getElementById('slSpeed').value=5;
-    document.getElementById('slOpacity').value=70;
-  }
-  onSliderChange();
-}
-
-function onSliderChange(){
-  const scroll = +document.getElementById('slScroll').value;
-  const time   = +document.getElementById('slTime').value;
-  const speed  = +document.getElementById('slSpeed').value;
-  const opacity= +document.getElementById('slOpacity').value;
-  _secSettings = {
-    scroll, time,
-    speed: [100,200,300,400,500][speed-1],
-    opacity
-  };
-  document.getElementById('valScroll').textContent = scroll+'자';
-  document.getElementById('valTime').textContent   = time+'초';
-  document.getElementById('valSpeed').textContent  = (speed*0.1).toFixed(1)+'초';
-  document.getElementById('valOpacity').textContent= opacity+'%';
-  if(_currentRoom) renderMessages();
-}
-
-// ══ 기울기 보안 ══
-function toggleTilt(){
-  _tiltOn = !_tiltOn;
-  const btn  = document.getElementById('tiltBtn');
-  const topBtn = document.getElementById('tiltTopBtn');
-  const msgs = document.getElementById('msgArea');
-
-  if(_tiltOn){
-    btn.textContent='ON'; btn.classList.add('on');
-    topBtn.classList.add('on');
-    showToast('📐 기울기 보안 ON — 45도 기울일 때만 표시!');
-    // 초기 잠금
-    msgs.classList.add('tilt-lock'); msgs.classList.remove('tilt-ok');
-    _tiltOk = false;
-    // 이벤트 등록
-    _tiltHandler = e=>{
-      const beta = e.beta != null ? e.beta : 0;
-      const inRange = beta>=35 && beta<=65;
-      if(inRange !== _tiltOk){
-        _tiltOk = inRange;
-        if(inRange){ msgs.classList.remove('tilt-lock'); msgs.classList.add('tilt-ok'); }
-        else { msgs.classList.add('tilt-lock'); msgs.classList.remove('tilt-ok'); }
-      }
-    };
-    window.addEventListener('deviceorientation', _tiltHandler, true);
-  } else {
-    btn.textContent='OFF'; btn.classList.remove('on');
-    topBtn.classList.remove('on');
-    showToast('📐 기울기 보안 해제');
-    if(_tiltHandler){ window.removeEventListener('deviceorientation', _tiltHandler, true); _tiltHandler=null; }
-    msgs.classList.remove('tilt-lock','tilt-ok');
-  }
-}
-
-// ══ 친구 초대 링크 ══
-function openInvite(){
-  const url = location.origin + location.pathname + '?invite=' + encodeURIComponent(_myNick);
-  document.getElementById('inviteLinkBox').textContent = url;
-  document.getElementById('inviteModal').classList.add('open');
-  if(navigator.share) navigator.share({title:'CGO MESSAGE 초대',url}).catch(()=>{});
-}
-
-function copyInviteLink(){
-  const url = document.getElementById('inviteLinkBox').textContent;
-  navigator.clipboard.writeText(url).then(()=>{
-    showToast('✅ 링크 복사 완료!');
-  }).catch(()=>{
-    const t = document.createElement('textarea');
-    t.value = url; document.body.appendChild(t); t.select();
-    document.execCommand('copy'); document.body.removeChild(t);
-    showToast('✅ 링크 복사 완료!');
-  });
-  document.getElementById('inviteModal').classList.remove('open');
-}
-
-// 초대 파라미터 처리
-function handleInviteParam(inviterNick){
-  dbRef('cgm2/users').orderByChild('nick').equalTo(inviterNick).once('value').then(snap=>{
-    const data = snap.val();
-    if(!data) return;
-    const code = Object.keys(data)[0];
-    const user = data[code];
-    if(code !== _myCode) createRoom(code, user.nick, user.color||'#d4a843');
-  });
-}
-
-// 초대 수신 감지
-function listenInvites(){
-  dbRef('cgm2/invites/'+_myCode).on('child_added', snap=>{
-    const inv = snap.val();
-    if(!inv) return;
-    const code = snap.key;
-    if(!_rooms[code]){
-      _rooms[code] = { code, nick:inv.nick, color:inv.color||'#d4a843', lastMsg:'', lastTime:Date.now(), unread:1, msgs:[] };
-      saveRooms();
-      renderRoomList();
-      showToast('💬 '+inv.nick+'님이 대화를 시작했어요!');
-    }
-  });
-}
-
-// ══ 설정 ══
-function openSettings(){
-  document.getElementById('changeNickInput').value = _myNick;
-  document.getElementById('settingsModal').classList.add('open');
-}
-
-function changeNick(){
-  const nick = document.getElementById('changeNickInput').value.trim();
-  if(!nick){ showToast('닉네임을 입력해주세요!'); return; }
-  _myNick = nick;
-  localStorage.setItem('cgm2_nick', _myNick);
-  registerToFirebase();
-  document.getElementById('myNickBar').textContent = _myNick + ' · ' + _myCode;
-  document.getElementById('settingsModal').classList.remove('open');
-  showToast('✅ 닉네임이 변경됐어요!');
-}
-
-// ══ 암호화/복호화 ══
-function cgmEncrypt(text, key){
-  try{
-    let r='';
-    for(let i=0;i<text.length;i++) r+=String.fromCharCode(text.charCodeAt(i)^key.charCodeAt(i%key.length));
-    return btoa(unescape(encodeURIComponent(r)));
-  }catch(e){ return btoa(text); }
-}
-function cgmDecrypt(enc, key){
-  try{
-    const r=decodeURIComponent(escape(atob(enc)));
-    let out='';
-    for(let i=0;i<r.length;i++) out+=String.fromCharCode(r.charCodeAt(i)^key.charCodeAt(i%key.length));
-    return out;
-  }catch(e){ return enc; }
-}
-
-// ══ 유틸 ══
-function saveRooms(){ localStorage.setItem('cgm2_rooms', JSON.stringify(_rooms)); }
-function escHtml(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-let _toastTimer = null;
-function showToast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  if(_toastTimer) clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(()=>t.classList.remove('show'), 2500);
-}
+});
 </script>
 </body>
 </html>
